@@ -1,15 +1,15 @@
 from pydantic import BaseModel, EmailStr
 
-class userCreate(BaseModel):
+class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: str
 
-class userLogin(BaseModel):
+class UserLogin(BaseModel):
     email: EmailStr
     password: str
     
-class userInfo(BaseModel):
+class UserInfo(BaseModel):
     id: int
     name: str
     email: str

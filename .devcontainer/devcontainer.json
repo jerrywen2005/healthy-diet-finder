@@ -7,7 +7,8 @@
   "postCreateCommand": "pip install --no-cache-dir -r /workspace/requirements.txt",
   "forwardPorts": [8000],
   "mounts": [
-    "source=healthy_diet_finder_data,target=/workspace,type=volume"
+    "source=healthy_diet_finder_data,target=/workspace,type=volume",
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
   ],
   "remoteUser": "root",
   "customizations": {
