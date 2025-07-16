@@ -1,5 +1,12 @@
 from fastapi import FastAPI
-from app.api import auth
+from fastapi.staticfiles import StaticFiles
+from backend.app.api import auth
+
 
 app = FastAPI()
+
+# Serve Angular static files
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
+
 app.include_router(auth.router, prefix="/api/auth")

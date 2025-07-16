@@ -7,6 +7,8 @@ def get_env(key: str) -> str:
         raise ValueError(f"{key} is not set in your environment!")
     return value
 
+load_dotenv()
+
 JWT_SECRET = get_env("JWT_SECRET")
 DATABASE_URL = get_env("DATABASE_URL")
 OPENAI_API_KEY = get_env("OPENAI_API_KEY")

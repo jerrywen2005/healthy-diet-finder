@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from app.db.base import Base
+from backend.app.db.base import Base
 
 class History(Base):
     __tablename__ = "history"
