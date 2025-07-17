@@ -5,9 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from backend.env import DATABASE_URL
 
-engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Dependency to get DB session

@@ -8,11 +8,12 @@ COPY ../requirements.txt /workspace/requirements.txt
 RUN pip install --upgrade pip && pip install --no-cache-dir -r /workspace/requirements.txt
 
 
-# Install system packages: Node.js, npm, git, curl
+# Install system packages: Node.js, npm, git, curl, postgresql
 RUN apt-get update && \
     apt-get install -y curl git && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
+    apt-get update && apt-get install -y curl git postgresql-client
 
 # Install Caddy web server (for reverse proxy)
 RUN apt-get install -y debian-keyring debian-archive-keyring apt-transport-https gnupg && \
