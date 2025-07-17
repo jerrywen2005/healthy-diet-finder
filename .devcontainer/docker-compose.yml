@@ -2,16 +2,18 @@ version: '3.9'
 
 services:
   backend:
-    build: .
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
     container_name: healthy_diet_backend
     env_file:
-      - .env
+      - ../backend/.env
     ports:
       - "8000:8000"
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ..:/workspaces/health-diet-finder
 
   db:
     image: postgres:15

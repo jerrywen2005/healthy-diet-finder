@@ -6,7 +6,6 @@ from backend.app.api import auth
 app = FastAPI()
 
 # Serve Angular static files
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
 app.include_router(auth.router, prefix="/api/auth")
