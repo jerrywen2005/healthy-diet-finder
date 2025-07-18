@@ -1,6 +1,31 @@
-<form (ngSubmit)="login()">
-  <input [(ngModel)]="email" name="email" type="email" required placeholder="Email" />
-  <input [(ngModel)]="password" name="password" type="password" required placeholder="Password" />
-  <button type="submit">Sign In</button>
-  <div *ngIf="error" style="color:red;">{{ error }}</div>
-</form>
+<div class="auth-page">
+  <button class="about-btn" (click)="goToAbout()">
+    <span class="about-icon" aria-label="About">ℹ️</span>
+    About
+  </button>
+  <div class="auth-container">
+    <section class="auth-form">
+      <h1>Login to Your Account</h1>
+      <form (ngSubmit)="login()">
+        <label>
+          <span>Email</span>
+          <input type="email" [(ngModel)]="email" name="email" required autocomplete="email" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" [(ngModel)]="password" name="password" required autocomplete="current-password" />
+        </label>
+        <button class="main-btn" type="submit">Sign In</button>
+      </form>
+      <a class="forgot-link" (click)="goToReset()">Forgot password?</a>
+    </section>
+    <aside class="auth-aside">
+      <h2>New Here?</h2>
+      <p>
+        Sign up and begin living<br />
+        healthier and happier!
+      </p>
+      <button class="secondary-btn" (click)="goToRegister()">Sign Up</button>
+    </aside>
+  </div>
+</div>

@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: '', component: AboutPreLoginComponent },  // Default route
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignupComponent },
+  { path: 'about-pre-login', component: AboutPreLoginComponent },
   // ...other routes
 ];

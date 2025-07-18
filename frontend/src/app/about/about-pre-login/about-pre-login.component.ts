@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-about-pre-login',
-  templateUrl: './about-pre-login.component.html',
-  styleUrl: './about-pre-login.component.css',
+  standalone: true,
   imports: [CommonModule],
-  standalone: true
+  templateUrl: './about-pre-login.component.html',
+  styleUrls: ['./about-pre-login.component.css']
 })
 export class AboutPreLoginComponent {
+  constructor(private router: Router) {}
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
 }

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
@@ -22,5 +23,17 @@ export class LoginComponent {
       next: () => this.router.navigate(['/dashboard']),
       error: err => this.error = err.error.detail
     });
+  }
+
+  goToAbout() {
+    this.router.navigate(['/about-pre-login']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
+  goToReset() {
+    this.router.navigate(['/reset-password']);
   }
 }
