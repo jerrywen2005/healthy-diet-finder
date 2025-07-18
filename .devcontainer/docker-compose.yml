@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  backend:
+  dev:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
@@ -9,7 +9,9 @@ services:
     env_file:
       - ../backend/.env
     ports:
-      - "8000:8000"
+      - "1560:1560"
+      - "1561:1561"
+      - "1562:1562"
     depends_on:
       - db
     volumes:

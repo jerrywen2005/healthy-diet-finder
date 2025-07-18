@@ -1,7 +1,7 @@
 {
   "name": "healthy-diet-finder-dev",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "backend",
+  "service": "dev",
   "workspaceFolder": "/workspaces/health-diet-finder",
   "overrideCommand": true,
   "postCreateCommand": "pip install --no-cache-dir -r /workspace/requirements.txt",
