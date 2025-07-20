@@ -32,15 +32,19 @@ export class AuthService {
   }
 
   requestPasswordReset(email: string) {
-  return this.http.post('/api/request-password-reset', { email });
-}
+    return this.http.post(`${this.apiUrl}/request-password-reset`, { email });
+  }
 
-resetPassword(token: string, newPassword: string) {
-  return this.http.post('/api/reset-password', { token, new_password: newPassword });
-}
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, new_password: newPassword });
+  }
 
-verifyEmail(token: string) {
-  return this.http.get(`/api/verify?token=${token}`);
-}
+  verifyEmail(token: string) {
+    return this.http.get(`${this.apiUrl}/verify?token=${token}`);
+  }
+
+  resendVerification(email: string) {
+    return this.http.post<{message: string}>(`${this.apiUrl}/resend-verification`, { email });
+  }
 }
 

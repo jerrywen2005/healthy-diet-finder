@@ -16,3 +16,6 @@ class UserInfo(BaseModel):
     
     class Config:
         from_attributes = True
+
+class EmailRequest(BaseModel):
+    email: EmailStr

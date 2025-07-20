@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.schemas.user import UserCreate, UserLogin, UserInfo
+from backend.app.schemas.user import UserCreate, UserLogin, UserInfo, EmailRequest
 from backend.app.models.user import User
 from backend.app.db.session import get_db
 from backend.app.services.auth import hash_password, verify_password, create_access_token, create_verification_token
@@ -55,3 +55,17 @@ def verify_email(token: str, db: Session = Depends(get_db)):
     db_user.verification_token = None  # type: ignore
     db.commit()
     return {"message": "Email verified! You can now log in."}
+
+@router.post("/resend-verification")
+def resend_verification(data: EmailRequest, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == data.email).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found.")
+    if db_user.is_verified: # type: ignore
+        raise HTTPException(status_code=400, detail="This account is already verified.")
+
+    token = create_verification_token()
+    db_user.verification_token=token, # type: ignore
+    db.commit()
+    send_verification_email(db_user.email, db_user.verification_token) # type: ignore
+    return {"message": "Verification email resent."}
