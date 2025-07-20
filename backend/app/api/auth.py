@@ -30,9 +30,8 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
 
-    print(f"New user created: {new_user.email}, sending verification email...")
-    resp = send_verification_email(new_user.email, token) # type: ignore
-    print("Mailgun response:", getattr(resp, 'status_code', None), getattr(resp, 'text', None))
+
+    send_verification_email(new_user.email, token) # type: ignore
 
     return new_user
 
@@ -50,10 +49,9 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 @router.get("/verify")
 def verify_email(token: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.verification_token == token).first()
-    if not db_user:
-        raise HTTPException(status_code=400, detail="Invalid or expired token")
-    db_user.is_verified = True # type: ignore
-    db_user.verification_token = None # type: ignore
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="Invalid or expired token")
+    db_user.is_verified = True  # type: ignore
+    db_user.verification_token = None  # type: ignore
     db.commit()
     return {"message": "Email verified! You can now log in."}
-

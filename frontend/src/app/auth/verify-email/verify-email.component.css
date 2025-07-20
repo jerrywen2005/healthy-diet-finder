@@ -1,0 +1,28 @@
+.status-msg {
+  color: #217a15;
+  background: #e9ffe7;
+  border-radius: 10px;
+  margin: 1rem 0;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  text-align: center;
+}
+.status-error {
+  color: #bb2222;
+  background: #fff3f3;
+  border-radius: 10px;
+  margin: 1rem 0;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  text-align: center;
+}
+.link {
+  color: #70d05e;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.link:hover {
+  color: #4caf50;
+}

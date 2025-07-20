@@ -2,11 +2,14 @@ import { Routes } from '@angular/router';
 import { AboutPreLoginComponent } from './about/about-pre-login/about-pre-login.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/register/register.component';
+import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
 
 export const routes: Routes = [
   { path: '', component: AboutPreLoginComponent },  // Default route
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignupComponent },
   { path: 'about-pre-login', component: AboutPreLoginComponent },
+  { path: 'verify', component: VerifyEmailComponent },
+
   // ...other routes
 ];

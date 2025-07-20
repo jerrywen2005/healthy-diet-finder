@@ -30,4 +30,17 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  requestPasswordReset(email: string) {
+  return this.http.post('/api/request-password-reset', { email });
 }
+
+resetPassword(token: string, newPassword: string) {
+  return this.http.post('/api/reset-password', { token, new_password: newPassword });
+}
+
+verifyEmail(token: string) {
+  return this.http.get(`/api/verify?token=${token}`);
+}
+}
+
