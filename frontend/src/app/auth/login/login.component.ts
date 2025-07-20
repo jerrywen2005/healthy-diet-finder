@@ -20,8 +20,20 @@ export class LoginComponent {
 
   login() {
     this.auth.login({ email: this.email, password: this.password }).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: err => this.error = err.error.detail
+      next: () => {
+      this.error = null; // Clear any previous error
+      this.router.navigate(['/dashboard']);
+    },
+      error: err => {
+      if (typeof err.error?.detail === 'string') {
+        this.error = err.error.detail;
+      } else if (Array.isArray(err.error?.detail)) {
+        // Display validation errors as a readable string
+        this.error = err.error.detail.map((d: any) => d.msg).join(', ');
+      } else {
+        this.error = err.error?.detail || "Login failed. Please try again.";
+      }
+    }
     });
   }
 

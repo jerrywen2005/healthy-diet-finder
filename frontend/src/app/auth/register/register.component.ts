@@ -32,7 +32,16 @@ export class SignupComponent {
     }
     this.auth.signup({ name: this.name, email: this.email, password: this.password }).subscribe({
       next: () => this.router.navigate(['/login']),
-      error: err => this.error = err.error.detail
+      error: err => {
+      if (typeof err.error?.detail === 'string') {
+        this.error = err.error.detail;
+      } else if (Array.isArray(err.error?.detail)) {
+        // Display validation errors as a readable string
+        this.error = err.error.detail.map((d: any) => d.msg).join(', ');
+      } else {
+        this.error = err.error?.detail || "Login failed. Please try again.";
+      }
+    }
     });
   }
 
