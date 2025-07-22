@@ -4,8 +4,7 @@ from backend.app.schemas.user import UserCreate, UserLogin, UserInfo, EmailReque
 from backend.app.models.user import User
 from backend.app.db.session import get_db
 from backend.app.services.auth import hash_password, verify_password, create_access_token, create_verification_token
-from backend.app.services.email_service import send_verification_email
-from typing import cast
+from backend.app.services.email_service import send_verification_email, send_password_reset_email
 
 router = APIRouter()
 
@@ -46,6 +45,8 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 
+# Email Verification
+
 @router.get("/verify")
 def verify_email(token: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.verification_token == token).first()
@@ -69,3 +70,27 @@ def resend_verification(data: EmailRequest, db: Session = Depends(get_db)):
     db.commit()
     send_verification_email(db_user.email, db_user.verification_token) # type: ignore
     return {"message": "Verification email resent."}
+
+
+# Password Reset
+
+@router.post("/request-password-reset")
+def request_password_reset(email: str = Body(...), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    token = create_verification_token()
+    user.reset_token = token # type: ignore
+    db.commit()
+    send_password_reset_email(user.email, token) # type: ignore
+    return {"message": "Reset link sent to your email"}
+
+@router.post("/reset-password")
+def reset_password(token: str = Body(...), new_password: str = Body(...), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.reset_token == token).first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid reset token")
+    user.hashed_password = hash_password(new_password) # type: ignore
+    user.reset_token = None # type: ignore
+    db.commit()
+    return {"message": "Password has been reset successfully"}
