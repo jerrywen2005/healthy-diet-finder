@@ -75,8 +75,8 @@ def resend_verification(data: EmailRequest, db: Session = Depends(get_db)):
 # Password Reset
 
 @router.post("/request-password-reset")
-def request_password_reset(email: str = Body(...), db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == email).first()
+def request_password_reset(data: EmailRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == data.email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     token = create_verification_token()

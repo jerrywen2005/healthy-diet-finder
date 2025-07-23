@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-verify-email',
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
 })
 export class VerifyEmailComponent implements OnInit {
+  
   loading = true;
   message: string | null = null;
   error: string | null = null;
@@ -25,8 +27,8 @@ export class VerifyEmailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
-  ) {}
+    private router: Router,
+    private auth: AuthService  ) {}
 
   ngOnInit() {
     const token = this.route.snapshot.queryParamMap.get('token');
@@ -35,20 +37,20 @@ export class VerifyEmailComponent implements OnInit {
       this.error = 'Invalid verification link.';
       return;
     }
-    this.http.get<{ message: string }>('/api/verify', { params: { token } }).subscribe({
-      next: (res) => {
-        this.loading = false;
-        this.success = true;
-        this.message = res.message;
-      },
-      error: (err) => {
-  this.loading = false;
-  if (err.status === 404) {
-    this.error = "This link is invalid or you have already verified. If you have already verified your email, you can log in.";
-  } else {
-    this.error = err.error.detail || 'Verification failed.';
-  }
-}
+    this.auth.verifyEmail(token).subscribe({
+    next: (res: { message: string }) => {
+      this.loading = false;
+      this.success = true;
+      this.message = res.message;
+    },
+    error: (err: any) => {
+      this.loading = false;
+      if (err.status === 404) {
+        this.error = "This link is invalid or you have already verified. If you have already verified your email, you can log in.";
+      } else {
+        this.error = err.error.detail || 'Verification failed.';
+      }
+    }
     });
   }
 
