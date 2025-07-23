@@ -1,44 +1,40 @@
 .auth-page {
   min-height: 100vh;
-  background: #ececec;
+  background: #deffe5;
   padding: 2rem 0 0 0;
 }
 
 .about-btn {
-  background: #f5cfc4;
-  color: #3a2921;
+  position: absolute;
+  top: 1.7rem;
+  left: 2rem;
   border: none;
-  border-radius: 16px;
-  padding: 0.6rem 1.6rem;
-  font-weight: 600;
-  font-size: 1.1rem;
+  background: transparent;
+  color: #179d65;
+  font-size: 1.05rem;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 2rem;
-  margin-left: 2rem;
   cursor: pointer;
-  box-shadow: 0 1px 5px #d5bfa2a2;
-  transition: background 0.16s;
 }
-.about-btn:hover { background: #eeb9ad; }
-
-.about-icon { font-size: 1.5rem; }
+.about-icon {
+  font-size: 1.3rem;
+  margin-right: 0.2rem;
+}
 
 .auth-container {
   display: flex;
   max-width: 900px;
   margin: 0 auto;
-  background: #fff;
+  background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 24px #d8c9b3a2;
+  box-shadow: 0 4px 24px #92c5a1b2;
 }
 
 .auth-form {
   flex: 1.4;
   padding: 3rem 2.5rem 2rem 2.5rem;
-  background: #fff;
+  background: #f5fbf3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +45,7 @@
   font-family: 'Georgia', serif;
   font-weight: 700;
   margin-bottom: 2rem;
-  color: #202020;
+  color: #24704b;
 }
 
 .auth-form form {
@@ -64,29 +60,29 @@
   flex-direction: column;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #1a210f;
+  color: #287148;
   gap: 0.35rem;
 }
 
 .auth-form input {
-  border: 1.5px solid #b4b4b4;
+  border: 1.5px solid #38b876;
   border-radius: 15px;
-  background: #f8fcf7;
+  background: #dcffe8;
   padding: 0.8rem 1rem;
   font-size: 1.1rem;
   transition: border 0.18s;
   margin-top: 0.1rem;
 }
 .auth-form input:focus {
-  border-color: #81ce5d;
+  border-color: #29b865;
   outline: none;
-  background: #f6fff3;
+  background: #e0ffe4;
 }
 
 .main-btn {
   width: 100%;
-  background: #93eb6e;
-  color: #1d4910;
+  background: #29b865;
+  color: #fff;
   border: none;
   border-radius: 20px;
   padding: 0.85rem 0;
@@ -98,24 +94,24 @@
   transition: background 0.15s, box-shadow 0.15s;
 }
 .main-btn:hover {
-  background: #70d05e;
-  box-shadow: 0 6px 20px #93eb6e90;
+  background: #218f4f;
+  box-shadow: 0 6px 20px #bfeacb90;
 }
 
 .forgot-link {
   display: inline-block;
-  color: #212323;
+  color: #228a60;
   margin: 1.1rem 0 0.3rem 0;
   font-size: 1rem;
   text-decoration: underline;
   cursor: pointer;
-  opacity: 0.78;
+  opacity: 0.84;
 }
-.forgot-link:hover { opacity: 1; color: #69b74c; }
+.forgot-link:hover { opacity: 1; color: #29b865; }
 
 .auth-aside {
   flex: 1;
-  background: #c7f3b4;
+  background: #abfbca;
   padding: 3rem 2.5rem 2rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -127,35 +123,36 @@
   font-size: 2rem;
   font-family: 'Georgia', serif;
   margin-bottom: 0.5rem;
-  color: #1e3611;
+  color: #27b061;
 }
 .auth-aside p {
   font-size: 1.14rem;
   margin-bottom: 2.1rem;
-  color: #2e4c19;
+  color: #36725a;
 }
 .secondary-btn {
-  background: #93eb6e;
-  color: #1d4910;
-  border: none;
+  background: #fff;
+  color: #29b865;
+  border: 2px solid #29b865;
   border-radius: 18px;
   padding: 0.75rem 2.2rem;
   font-weight: 600;
   font-size: 1.1rem;
   box-shadow: 0 2px 7px #b8e7ba70;
   cursor: pointer;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
 }
 .secondary-btn:hover {
-  background: #70d05e;
-  box-shadow: 0 6px 20px #93eb6e90;
+  background: #29b865;
+  color: #fff;
+  box-shadow: 0 6px 20px #bfeacb90;
 }
 
 .signup-mode .auth-form {
-  background: #c7f3b4;
+  background: #e6f8ed;
 }
 .signup-mode .auth-aside {
-  background: #fff;
+  background: #f5fbf3;
 }
 .signup-mode .auth-aside h2 { color: #232323; }
 .signup-mode .auth-aside p { color: #3e5331; }

@@ -16,9 +16,11 @@ import { AuthService } from '../auth.service';
 export class ResetPasswordComponent {
 
   newPassword = '';
+  confirmPassword = '';
   success = false;
   error: string | null = null;
   token: string | null;
+  loading = false;
 
 constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,11 @@ constructor(
    submit() {
     if (!this.token) {
       this.error = 'Invalid or expired link.';
+      return;
+    }
+
+    if (this.newPassword !== this.confirmPassword) {
+      this.error = "Passwords do not match";
       return;
     }
 

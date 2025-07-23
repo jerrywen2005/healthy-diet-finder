@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-password-reset',
@@ -17,7 +18,7 @@ export class RequestPasswordResetComponent {
   error: string | null = null;
   loading = false;
 
-  constructor(private http: HttpClient,private auth: AuthService) {}
+  constructor(private http: HttpClient,private auth: AuthService,  private router: Router,) {}
 
   submit() {
     this.loading = true;
@@ -29,9 +30,24 @@ export class RequestPasswordResetComponent {
         this.loading = false;
       },
       error: (err) => {
-        this.loading = false;
-        this.error = err.error.detail || "Failed to send reset link.";
-      }
+  this.loading = false;
+  const detail = err.error?.detail;
+  if (typeof detail === 'string') {
+    this.error = detail;
+  } else if (Array.isArray(detail)) {
+    this.error = detail.map((d: any) => d.msg || JSON.stringify(d)).join('; ');
+  } else if (typeof detail === 'object' && detail !== null) {
+    this.error = JSON.stringify(detail);
+  } else {
+    this.error = "Failed to send reset link.";
+  }
+}
     });
+  }
+  goToAbout() {
+    this.router.navigate(['/about-pre-login']);
+  }
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

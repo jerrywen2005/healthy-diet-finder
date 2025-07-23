@@ -1,30 +1,27 @@
 <div class="auth-page">
-  <button class="about-btn" (click)="goToAbout()">
-    <span class="about-icon" aria-label="About">ℹ️</span>
-    About
-  </button>
   <div class="auth-container">
     <section class="auth-form">
       <h1 *ngIf="loading">Verifying Email...</h1>
       <h1 *ngIf="success && !loading">Email Verified!</h1>
       <h1 *ngIf="error && !loading">Verification Failed</h1>
+
       <div *ngIf="loading" class="status-msg">Please wait, verifying your token...</div>
+
       <div *ngIf="success && !loading" class="success-msg">
         <p>{{ message }}</p>
         <button class="main-btn" (click)="goToLogin()">Sign In</button>
       </div>
+
       <div *ngIf="error && !loading" class="error-msg">
         <p>{{ error }}</p>
-        <button class="main-btn" (click)="goToLogin()">Sign In</button>
+        <button class="secondary-btn" (click)="goToLogin()">Sign In</button>
         <div style="margin-top: 1rem;">
         </div>
       </div>
     </section>
     <aside class="auth-aside">
       <h2>Welcome to Healthy Diet Finder</h2>
-      <p>
-        Join us for a healthier and happier lifestyle!
-      </p>
+      <p>Check your inbox for the verification link!</p>
     </aside>
   </div>
 </div>

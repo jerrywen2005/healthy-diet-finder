@@ -1,66 +1,58 @@
-<div class="about-pre-login-wrapper">
-  <header class="header">
-    <div class="header-title">
-      <h1>Welcome to <span>Healthy Diet Finder!</span></h1>
+<div class="about-bg">
+  <div class="about-hero-card">
+    <div class="about-hero-gradient"></div>
+    <div class="about-main-content">
+      <div class="about-header">
+        <h1>
+          <span class="muted">Welcome to</span> <span class="brand">Healthy Diet Finder!</span>
+        </h1>
+        <p class="hero-subtitle">
+          Your personalized AI-powered nutrition and meal planning assistant.
+        </p>
+      </div>
+      <div class="about-features-wrap">
+        <div class="about-feature-card">
+          <h2>🍽️ Restaurant Advisor</h2>
+          <p>Find healthy restaurants nearby based on your dietary goals and preferences.</p>
+        </div>
+        <div class="about-feature-card">
+          <h2>🛒 Grocery Planner</h2>
+          <p>Generate grocery lists and meal plans tailored to your budget and health needs.</p>
+        </div>
+        <div class="about-feature-card">
+          <h2>🧬 DNA Analysis</h2>
+          <p>Upload lab results for science-based, ultra-personalized nutrition and fitness advice.</p>
+        </div>
+        <div class="about-feature-card">
+          <h2>🤖 AI Coaching</h2>
+          <p>Smart suggestions, goal tracking, and 24/7 coaching powered by OpenAI.</p>
+        </div>
+      </div>
+      <div class="about-info-cards">
+        <div class="info-card">
+          <h3>Who’s It For?</h3>
+          <ul>
+            <li> Fitness Enthusiasts</li>
+            <li> Meal Preppers</li>
+            <li> Special Health Needs</li>
+            <li> Data-Driven Eaters</li>
+            <li> Privacy-Focused Users</li>
+          </ul>
+        </div>
+        <div class="info-card steps-card">
+          <h3>How It Works</h3>
+          <ol>
+            <li>Sign up & set your dietary goals</li>
+            <li>Upload your DNA/lab info (optional)</li>
+            <li>Get your personalized AI plan</li>
+            <li>Find restaurants, shop smart, track progress</li>
+          </ol>
+        </div>
+      </div>
+      <div class="about-btn-bar">
+        <button class="about-btn login" (click)="goToLogin()">Sign In</button>
+        <button class="about-btn signup" (click)="goToRegister()">Register</button>
+      </div>
     </div>
-    <button class="sign-in-btn" (click)="goToRegister()">Sign in / Sign up</button>
-  </header>
-
-  <main class="main-content">
-    <section class="info-section">
-      <h2>What We Do</h2>
-      <p>
-        Healthy Diet Finder helps you eat smarter by combining AI, nutrition data, and personalized planning tools.
-        Whether you're meal-prepping, dining out, or optimizing for fitness goals — we’ve got your back.
-      </p>
-      <div class="screenshot-container">
-        <img src="assets/mockup-dashboard.png" alt="App Screenshot" />
-      </div>
-      <h3>How It Works</h3>
-      <ol>
-        <li>Set your dietary goals, upload your DNA/lab info</li>
-        <li>Let AI create a personalized plan for you</li>
-        <li>Shop smart or find restaurants nearby</li>
-        <li>Plan quicker using My Smart Planner</li>
-      </ol>
-    </section>
-    <section class="features-section">
-      <h2>Key Features</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <span role="img" aria-label="Restaurant">🍽️</span>
-          <strong>Restaurant Advisor:</strong>
-          <span>Find healthy places to eat nearby based on your goals</span>
-        </div>
-        <div class="feature-card">
-          <span role="img" aria-label="Grocery">🛒</span>
-          <strong>Grocery Planner:</strong>
-          <span>Smart grocery lists and meal plans built for your budget and diet</span>
-        </div>
-        <div class="feature-card">
-          <span role="img" aria-label="DNA">🧬</span>
-          <strong>DNA Analysis:</strong>
-          <span>Upload DNA or lab results for tailored diet and workout plans</span>
-        </div>
-        <div class="feature-card">
-          <span role="img" aria-label="Robot">🤖</span>
-          <strong>AI-Powered:</strong>
-          <span>Smart suggestions, tips, and coaching using OpenAI</span>
-        </div>
-      </div>
-    </section>
-    <section class="who-section">
-      <h2>Who It’s For</h2>
-      <ul>
-        <li><b>Fitness Enthusiasts</b> – Looking for healthy places to eat out without compromising dietary goals</li>
-        <li><b>Meal Preppers</b> – Want to save time and money by generating smart grocery lists and weekly meal plans</li>
-        <li><b>People with Specific Health Needs</b> – Need personalized diet and fitness recommendations based on DNA, lab results, or medical conditions</li>
-        <li><b>Data-Driven Eaters</b> – Like to track, review, and optimize their nutrition choices over time</li>
-        <li><b>Privacy-Conscious Users</b> – Prefer secure logins and personalized spaces to manage their goals and data</li>
-      </ul>
-      <div class="cta-btn-container">
-        <button class="cta-btn" (click)="goToLogin()">Log In to get Started</button>
-      </div>
-    </section>
-  </main>
+  </div>
 </div>
