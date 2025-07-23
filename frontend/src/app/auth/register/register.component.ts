@@ -31,7 +31,7 @@ export class SignupComponent {
       return;
     }
     this.auth.signup({ name: this.name, email: this.email, password: this.password }).subscribe({
-      next: () => this.router.navigate(['/login']),
+      next: () => this.goToLoginSuccess(this.email),
       error: err => {
       if (typeof err.error?.detail === 'string') {
         this.error = err.error.detail;
@@ -52,4 +52,8 @@ export class SignupComponent {
   goToLogin() {
     this.router.navigate(['/login']);
   }
+  
+  goToLoginSuccess(email: string) {
+  this.router.navigate(['/signup-success'], { queryParams: { email } });
+}
 }

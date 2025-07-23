@@ -1,0 +1,27 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <section class="auth-form">
+      <h1>Sign Up Successful!</h1>
+      <p>
+        <p>We've sent a verification email to <b>{{ userEmail }}</b>.
+        Please check your inbox and click the link to verify your account.
+      </p>
+      <div style="margin: 1.5rem 0;">
+        <span>Didn't get the email?</span>
+        <input [(ngModel)]="resendEmailInput" type="email" placeholder="Enter your email" required />
+        <button class="secondary-btn" (click)="resendVerification()" [disabled]="resendInProgress">
+          {{ resendInProgress ? 'Resending…' : 'Resend Email' }}
+        </button>
+        <div *ngIf="resendMessage" class="success-msg">{{ resendMessage }}</div>
+        <div *ngIf="resendError" class="error-msg">{{ resendError }}</div>
+      </div>
+      <button class="main-btn" (click)="goToLogin()">Go to Login</button>
+    </section>
+    <aside class="auth-aside">
+      <h2>Welcome to Healthy Diet Finder</h2>
+      <p>
+        Join us for a healthier and happier lifestyle!
+      </p>
+    </aside>
+  </div>
+</div>

@@ -61,34 +61,4 @@ export class VerifyEmailComponent implements OnInit {
   goToAbout() {
     this.router.navigate(['/about-pre-login']);
   }
-  resendVerification() {
-    if (!this.userEmail) {
-      this.resendError = "Please enter your email.";
-      return;
-    }
-    this.resendInProgress = true;
-    this.resendError = null;
-    this.resendMessage = null;
-
-    this.http.post<{ resendMessage: string }>('/api/auth/resend-verification', { email: this.userEmail }).subscribe({
-      next: (res) => {
-        this.resendInProgress = false;
-        this.resendMessage = res.resendMessage;
-      },
-
-      error: (err) => {
-        this.resendInProgress = false;
-      if (typeof err.error?.detail === 'string') {
-        this.resendError = err.error.detail || "Could not resend verification email.";
-      } else if (Array.isArray(err.error?.detail)) {
-        // Display validation errors as a readable string
-        this.resendError = err.error.detail.map((d: any) => d.msg).join(', ');
-      }
-      else {
-        this.error = err.error?.detail || "Something went wrong.";
-      }
-    }
-      
-    });
-  }
 }

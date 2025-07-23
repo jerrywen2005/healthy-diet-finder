@@ -17,14 +17,6 @@
         <p>{{ error }}</p>
         <button class="main-btn" (click)="goToLogin()">Sign In</button>
         <div style="margin-top: 1rem;">
-          <span>Didn't get the email?</span>
-          <div></div>
-          <input [(ngModel)]="userEmail" type="email" placeholder="Enter your email" required>
-          <button class="secondary-btn" (click)="resendVerification()" [disabled]="resendInProgress">
-            {{ resendInProgress ? 'Resending…' : 'Resend Email' }}
-          </button>
-          <div *ngIf="resendMessage" class="success-msg">{{ resendMessage }}</div>
-          <div *ngIf="resendError" class="error-msg">{{ resendError }}</div>
         </div>
       </div>
     </section>
