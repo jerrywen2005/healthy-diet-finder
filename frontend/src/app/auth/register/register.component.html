@@ -1,0 +1,45 @@
+<div class="auth-page">
+  <button class="about-btn" (click)="goToAbout()">
+    <span class="about-icon" aria-label="About">ℹ️</span>
+    About
+  </button>
+  <div class="auth-container signup-mode">
+    <section class="auth-form">
+      <h1>Create Your Account</h1>
+
+      <div *ngIf="error" class="error-message">{{ error }}</div>
+      
+      <form (ngSubmit)="signup()">
+        <label>
+          <span>Name</span>
+          <input type="text" [(ngModel)]="name" name="name" required autocomplete="name" />
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" [(ngModel)]="email" name="email" required autocomplete="email" />
+        </label>
+        <label>
+          <span>Confirm Email</span>
+          <input type="email" [(ngModel)]="confirmEmail" name="confirmEmail" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" [(ngModel)]="password" name="password" required autocomplete="new-password" />
+        </label>
+        <label>
+          <span>Confirm Password</span>
+          <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+        </label>
+        <button class="main-btn" type="submit">Sign Up</button>
+      </form>
+    </section>
+    <aside class="auth-aside">
+      <h2>Already Have An Account?</h2>
+      <p>
+        Login and begin living<br />
+        healthier and happier!
+      </p>
+      <button class="secondary-btn" (click)="goToLogin()">Sign In</button>
+    </aside>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "name": "healthy-diet-finder-dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/health-diet-finder",
+  "overrideCommand": true,
+  "postCreateCommand": "pip install --no-cache-dir -r /workspace/requirements.txt",
+  "forwardPorts": [8000],
+  "mounts": [
+    "source=healthy_diet_finder_data,target=/workspace,type=volume",
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+  ],
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}
