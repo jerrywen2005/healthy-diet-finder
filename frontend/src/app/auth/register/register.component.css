@@ -1,6 +1,6 @@
 .auth-page {
   min-height: 100vh;
-  background: #deffe5;
+  background: #fcffef;
   padding: 2rem 0 0 0;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .auth-form input {
-  border: 1.5px solid #38b876;
+  border: 1.5px solid #1b452f;
   border-radius: 15px;
   background: #dcffe8;
   padding: 0.8rem 1rem;
@@ -111,7 +111,7 @@
 
 .auth-aside {
   flex: 1;
-  background: #abfbca;
+  background: #cefdcc;
   padding: 3rem 2.5rem 2rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -147,15 +147,6 @@
   color: #fff;
   box-shadow: 0 6px 20px #bfeacb90;
 }
-
-.signup-mode .auth-form {
-  background: #abfbca;
-}
-.signup-mode .auth-aside {
-  background: #f5fbf3;
-}
-.signup-mode .auth-aside h2 { color: #232323; }
-.signup-mode .auth-aside p { color: #3e5331; }
 
 @media (max-width: 900px) {
   .auth-container {
