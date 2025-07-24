@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-widgets',
-  imports: [],
   templateUrl: './widgets.component.html',
-  styleUrl: './widgets.component.css'
+  styleUrls: ['./widgets.component.css'],
+  imports: [CommonModule]
 })
-export class WidgetsComponent {
-
-}
+export class WidgetsComponent {}

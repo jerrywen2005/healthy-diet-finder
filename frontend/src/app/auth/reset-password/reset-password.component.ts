@@ -7,7 +7,6 @@ import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-reset-password',
-
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
   standalone: true,

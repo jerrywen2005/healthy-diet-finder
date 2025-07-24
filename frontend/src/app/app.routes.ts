@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { AboutPreLoginComponent } from './about/about-pre-login/about-pre-login.component';
 import { AboutPostLoginComponent } from './about/about-post-login/about-post-login.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -17,7 +18,18 @@ export const routes: Routes = [
   { path: 'verify', component: VerifyEmailComponent },
   { path: 'request-password-reset', component: RequestPasswordResetComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'signup-success', component: SignupSuccessComponent}
+  { path: 'signup-success', component: SignupSuccessComponent},
+
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  // add other lazy-loaded features here
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '**', redirectTo: '/dashboard' }
 
   // ...other routes
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,1 +1,48 @@
-<p>home works!</p>
+<div class="dashboard-shell">
+  <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+
+  <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen"></app-sidebar>
+  
+<div class="dashboard-content-wrapper" [class.shifted]="sidebarOpen">
+  <div class="dashboard-main">
+    <h1 class="dashboard-title">👋 Welcome back, Jerry!</h1>
+
+    <!-- MAIN FEATURE CARDS -->
+    <div class="feature-cards-row">
+      <div class="feature-card feature-restaurant">
+        <div class="feature-icon" aria-label="Restaurant">🍽️</div>
+        <div class="feature-title">Restaurant Finder</div>
+        <div class="feature-desc">
+          Discover healthy restaurants nearby with nutrition-conscious menus tailored to your diet.
+        </div>
+        <button class="feature-btn" (click)="goToRestaurantFinder()">Start Planning</button>
+      </div>
+      <div class="feature-card feature-grocery">
+        <div class="feature-icon" aria-label="Grocery">🛒</div>
+        <div class="feature-title">Grocery Planner</div>
+        <div class="feature-desc">
+          Create a weekly meal plan and smart shopping list based on your goals, taste, and budget.
+        </div>
+        <button class="feature-btn" (click)="goToGroceryPlanner()">Explore Restaurants</button>
+      </div>
+      <div class="feature-card feature-dna">
+        <div class="feature-icon" aria-label="DNA">🧬</div>
+        <div class="feature-title">DNA Fitness Plan</div>
+        <div class="feature-desc">
+          Upload DNA or lab results for a personalized workout and nutrition plan built for your body.
+        </div>
+        <button class="feature-btn feature-btn-dna" (click)="goToDNAFitness()">Upload Results</button>
+      </div>
+    </div>
+
+    <app-widgets></app-widgets>
+  </div>
+</div>
+</div>
