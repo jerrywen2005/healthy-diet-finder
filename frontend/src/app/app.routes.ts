@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AboutPreLoginComponent } from './about/about-pre-login/about-pre-login.component';
+import { AboutPostLoginComponent } from './about/about-post-login/about-post-login.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/register/register.component';
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
@@ -9,6 +10,7 @@ import { SignupSuccessComponent } from './auth/signup-success/signup-success.com
 
 export const routes: Routes = [
   { path: '', component: AboutPreLoginComponent },  // Default route
+  { path: 'post-login', component: AboutPostLoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignupComponent },
   { path: 'about-pre-login', component: AboutPreLoginComponent },
