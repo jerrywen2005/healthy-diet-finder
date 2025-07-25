@@ -21,8 +21,8 @@ export class LoginComponent {
   login() {
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: () => {
-      this.error = null; // Clear any previous error
-      this.router.navigate(['/dashboard']);
+        this.error = null; // Clear any previous error
+        this.router.navigate(['/dashboard']);
     },
       error: err => {
       if (typeof err.error?.detail === 'string') {
