@@ -9,6 +9,7 @@
 .widget-card {
   background: #d4f8d4;
   color: #305a36;
+  border: 2px solid #c9e9b4;
   border-radius: 22px;
   box-shadow: 0 4px 16px #98e49a36;
   padding: 1.4rem 2.3rem 2.2rem 2.3rem;

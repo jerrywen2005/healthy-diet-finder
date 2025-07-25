@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
@@ -11,7 +12,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'frontend';
-  
+
   constructor(router: Router) {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)

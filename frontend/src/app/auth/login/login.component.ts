@@ -38,14 +38,14 @@ export class LoginComponent {
   }
 
   goToAbout() {
-    this.router.navigate(['/about-pre-login']);
+    this.router.navigate(['about/about-pre-login']);
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['auth/register']);
   }
 
   goToReset() {
-    this.router.navigate(['/request-password-reset']);
+    this.router.navigate(['auth/request-password-reset']);
   }
 }

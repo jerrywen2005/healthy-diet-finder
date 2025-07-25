@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
 
 @Component({
+  standalone: true,
   selector: 'app-signup-success',
   imports: [CommonModule, FormsModule],
   templateUrl: './signup-success.component.html',
@@ -62,6 +63,6 @@ export class SignupSuccessComponent implements OnInit{
     });
   }
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 }

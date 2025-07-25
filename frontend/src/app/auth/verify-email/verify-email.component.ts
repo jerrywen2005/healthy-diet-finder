@@ -55,10 +55,10 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 
   goToAbout() {
-    this.router.navigate(['/about-pre-login']);
+    this.router.navigate(['about/about-pre-login']);
   }
 }

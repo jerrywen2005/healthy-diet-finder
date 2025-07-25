@@ -48,7 +48,10 @@
   box-shadow: 0 8px 32px #a2e3a3b5;
   transform: translateY(-4px) scale(1.027);
 }
-.feature-restaurant,
+.feature-restaurant{
+  background: #b8e6f6;
+  border-color: #57c4e0;
+}
 .feature-grocery {
   background: #d5f6b8;
   border-color: #97e057;
@@ -93,6 +96,13 @@
 .feature-btn-dna {
   background: #f5bebe;
   color: #512626;
+}
+.feature-btn-restaurant {
+  background: #5fd4e6;
+  color: #264851;
+}
+.feature-btn-restaurant:hover {
+  background: #39bfd4;
 }
 .feature-btn-dna:hover {
   background: #f7a8a8;
