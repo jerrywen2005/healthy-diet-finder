@@ -6,4 +6,4 @@ reverse_proxy /docs* http://localhost:1561
 reverse_proxy /auth* http://localhost:1561
 reverse_proxy /openapi.json http://localhost:1561
 
-reverse_proxy * http://localhost:1562
+reverse_proxy * http://localhost:1561
