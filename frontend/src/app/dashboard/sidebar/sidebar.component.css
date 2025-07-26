@@ -41,8 +41,20 @@
   transition: background 0.16s, color 0.16s;
   display: block;
 }
-.sidebar-list a:hover,
-.sidebar-list a.router-link-active {
-  background: #f5cfc4;
-  color: #bb4637;
+.sidebar-list a:hover{
+  background: #fed6cb;
+}
+
+.sidebar-btn {
+  background: #fccbc2;
+  width: 190px;
+  color: #153910;
+  border: solid #e2b0a9;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.18rem;
+  padding: 0.4rem .9rem;
+  box-shadow: 0 2px 7px #c5f8be44;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.14s;
 }
