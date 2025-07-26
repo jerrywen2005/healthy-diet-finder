@@ -21,8 +21,8 @@ export class LoginComponent {
   login() {
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: () => {
-      this.error = null; // Clear any previous error
-      this.router.navigate(['/dashboard']);
+        this.error = null; // Clear any previous error
+        this.router.navigate(['/dashboard']);
     },
       error: err => {
       if (typeof err.error?.detail === 'string') {
@@ -38,14 +38,14 @@ export class LoginComponent {
   }
 
   goToAbout() {
-    this.router.navigate(['/about-pre-login']);
+    this.router.navigate(['about/about-pre-login']);
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['auth/register']);
   }
 
   goToReset() {
-    this.router.navigate(['/request-password-reset']);
+    this.router.navigate(['auth/request-password-reset']);
   }
 }

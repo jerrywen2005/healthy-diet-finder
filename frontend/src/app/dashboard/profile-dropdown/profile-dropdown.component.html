@@ -1,0 +1,9 @@
+<div class="profile-dropdown-container">
+  <button class="profile-btn" (click)="toggleMenu()">
+    <span class="profile-icon">👤</span> {{ userName }}
+  </button>
+  <div class="dropdown-menu" *ngIf="showMenu">
+    <button class="dropdown-item" (click)="goToAccount()">Account</button>
+    <button class="dropdown-item" (click)="signOut()">Sign out</button>
+  </div>
+</div>

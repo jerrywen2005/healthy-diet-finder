@@ -7,7 +7,6 @@ import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-reset-password',
-
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
   standalone: true,
@@ -51,10 +50,10 @@ constructor(
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 
   goToAbout() {
-    this.router.navigate(['/about-pre-login']);
+    this.router.navigate(['about/about-pre-login']);
   }
 }

@@ -46,14 +46,14 @@ export class SignupComponent {
   }
 
   goToAbout() {
-    this.router.navigate(['/about-pre-login']);
+    this.router.navigate(['about/about-pre-login']);
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
   
   goToLoginSuccess(email: string) {
-  this.router.navigate(['/signup-success'], { queryParams: { email } });
+  this.router.navigate(['auth/signup-success'], { queryParams: { email } });
 }
 }

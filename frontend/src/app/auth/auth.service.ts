@@ -17,18 +17,18 @@ export class AuthService {
     return this.http.post<{ access_token: string }>(`${this.apiUrl}/login`, data).pipe(
       tap(res => {
         this.token = res.access_token;
-        localStorage.setItem('token', this.token!);
+        localStorage.setItem('access_token', this.token!);
       })
     );
   }
 
   logout() {
     this.token = null;
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('access_token');
   }
 
   requestPasswordReset(email: string) {

@@ -1,0 +1,152 @@
+.dashboard-shell {
+  min-height: 100vh;
+  background: #f7ede8;
+  position: relative;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-height: 10vh;
+  background: #f7ede8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.8rem 2rem 1.8rem;
+  /* Ensures content doesn't get pushed too far down */
+}
+.dashboard-content-wrapper {
+  transition: margin-left 0.25s cubic-bezier(.69,0,.19,1);
+  margin-left: 0;
+  position: relative;
+}
+.dashboard-content-wrapper.shifted {
+  margin-left: 240px;
+}
+
+.feature-cards-row {
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  margin: 2.5rem 0 2.8rem 0;
+}
+.feature-card {
+  background: #eafbe3;
+  border: 2px solid #c9e9b4;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px #d7efbb55;
+  width: 295px;
+  padding: 2rem 1.6rem 2.1rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.25s, transform 0.13s;
+  text-align: center;
+}
+.feature-card:hover {
+  box-shadow: 0 8px 32px #a2e3a3b5;
+  transform: translateY(-4px) scale(1.027);
+}
+.feature-restaurant{
+  background: #b8e6f6;
+  border-color: #57c4e0;
+}
+.feature-grocery {
+  background: #d5f6b8;
+  border-color: #97e057;
+}
+.feature-dna {
+  background: #fde2e2;
+  border-color: #f5bebe;
+}
+.feature-icon {
+  font-size: 2.3rem;
+  margin-bottom: 0.6rem;
+}
+.feature-title {
+  font-family: 'Georgia', serif;
+  font-size: 1.38rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  color: #323021;
+}
+.feature-desc {
+  font-size: 1.07rem;
+  margin-bottom: 1.35rem;
+  color: #2c2d23;
+  line-height: 1.4;
+}
+.feature-btn {
+  background: #94e161;
+  color: #153910;
+  border: none;
+  border-radius: 17px;
+  font-weight: 700;
+  font-size: 1.14rem;
+  padding: 0.7rem 2.1rem;
+  box-shadow: 0 2px 7px #c5f8be44;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.14s;
+}
+.feature-btn:hover {
+  background: #63cf38;
+  color: #153910;
+}
+.feature-btn-dna {
+  background: #f5bebe;
+  color: #512626;
+}
+.feature-btn-restaurant {
+  background: #5fd4e6;
+  color: #264851;
+}
+.feature-btn-restaurant:hover {
+  background: #39bfd4;
+}
+.feature-btn-dna:hover {
+  background: #f7a8a8;
+}
+
+
+.dashboard-title {
+  margin: 1.5rem 0 2rem 0;
+  font-size: 2.7rem;
+  font-family: 'Georgia', serif;
+  color: #221810;
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+  max-width: 1080px;
+  letter-spacing: 1px;
+}
+
+
+/* Sidebar hamburger */
+.sidebar-toggle {
+  position: fixed;
+  left: 1.3rem;
+  top: 1.3rem;
+  background: #f5cfc4;
+  color: #3a2921;
+  border: none;
+  border-radius: 16px;
+  font-size: 2.7rem;
+  font-weight: 700;
+  padding: 0.2rem 1.5rem;
+  z-index: 1202;
+  cursor: pointer;
+  display: block;
+  box-shadow: 0 2px 7px #ecd6c799;
+  transition:
+    background 0.25s,
+    left 0.25s cubic-bezier(.69,0,.19,1);
+}
+
+.sidebar-toggle.shifted-hamburger {
+  left: 160px;
+}
+
+.sidebar-toggle:hover {
+  background: #eeb9ad;
+}
