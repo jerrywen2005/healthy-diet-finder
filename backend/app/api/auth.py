@@ -7,7 +7,7 @@ from backend.app.db.session import get_db
 from backend.app.services.auth import hash_password, verify_password, create_access_token, create_verification_token
 from backend.app.services.email_service import send_verification_email, send_password_reset_email
 
-router = APIRouter()
+router = APIRouter(tags = ["Auth"])
 
 @router.post("/signup", response_model=UserInfo)
 def signup(user: UserCreate, db: Session = Depends(get_db)):

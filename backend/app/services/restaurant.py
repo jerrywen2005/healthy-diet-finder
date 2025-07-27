@@ -8,7 +8,7 @@ from backend.app.models.restaurant import RestaurantResult
 from backend.env import NUTRITIONIX_API_KEY, GOOGLE_MAPS_API_KEY, NUTRITIONIX_APP_ID, NUTRITIONIX_API_KEY
 
 
-def find_restaurants(input_data: FinderInput, db: Session, user_id: int | None = None): # temporarily does not require authentication
+def find_restaurants(input_data: FinderInput, db: Session, user_id: int):
     # Google Maps API to find nearby places
     places = get_nearby_restaurants(input_data.location, input_data.distance_range)
 
