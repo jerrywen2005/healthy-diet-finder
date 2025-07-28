@@ -1,4 +1,5 @@
 import re
+import json
 from typing import List
 from backend.app.schemas.restaurant import FinderInput, MealRecommendation
 import openai
@@ -69,68 +70,78 @@ def get_nutritionix_data(restaurant_names: List[str]):
         "x-app-key": NUTRITIONIX_API_KEY,
     }
     macros_data = []
-    failed_restaurants = set()
+    incomplete_items = []
 
     for restaurant_name in restaurant_names:
-        branded_items = []
-        try:
-            search_response = requests.get(
-                "https://trackapi.nutritionix.com/v2/search/instant",
-                headers=headers,
-                params={"query": restaurant_name}
-            )
-            branded_items = search_response.json().get("branded", [])
-        except Exception as e:
-            print(f"Nutritionix request error for {restaurant_name}: {e}")
-            failed_restaurants.add(restaurant_name)
-
-        for item in branded_items[:3]:  # up to 3 menu items
+        search_response = requests.get(
+            "https://trackapi.nutritionix.com/v2/search/instant",
+            headers=headers,
+            params={"query": restaurant_name}
+        )
+        # Using both branded and detail item requests to get the best of both worlds
+        branded_items = search_response.json().get("branded", [])
+        for item in branded_items[:3]:
             item_id = item.get("nix_item_id")
-            if not item_id:
-                failed_restaurants.add(restaurant_name)
-                continue
-            try:
+            menu_name = item.get("food_name")
+            detail_macros = {}
+            if item_id:
                 detail_response = requests.get(
                     f"https://trackapi.nutritionix.com/v2/search/item?nix_item_id={item_id}",
                     headers=headers
                 )
                 foods = detail_response.json().get("foods", [])
-                if not foods:
-                    continue
-                food = foods[0]
+                if foods:
+                    detail_macros = {
+                        "calories": foods[0].get("nf_calories"),
+                        "protein": foods[0].get("nf_protein"),
+                        "carbs": foods[0].get("nf_total_carbohydrate"),
+                        "fats": foods[0].get("nf_total_fat"),
+                        "fiber": foods[0].get("nf_dietary_fiber"),
+                    }
+            # Combine data: prefer detail, fallback to branded for missing macros
+            macros = {
+                "calories": fallback_macro(detail_macros.get("calories"), item.get("nf_calories")),
+                "protein": fallback_macro(detail_macros.get("protein"), item.get("nf_protein")),
+                "carbs": fallback_macro(detail_macros.get("carbs"), item.get("nf_total_carbohydrate")),
+                "fats": fallback_macro(detail_macros.get("fats"), item.get("nf_total_fat")),
+                "fiber": fallback_macro(detail_macros.get("fiber"), item.get("nf_dietary_fiber")),
+            }
+            # If any macro is missing, add to incomplete list for OpenAI
+            if None in macros.values():
+                incomplete_items.append({
+                    "restaurant": restaurant_name,
+                    "meal_name": menu_name,
+                    "macros": macros
+                })
+            else:
                 macros_data.append({
                     "restaurant": restaurant_name,
-                    "meal_name": food.get("food_name"),
-                    "macros": {
-                        "calories": food.get("nf_calories"),
-                        "protein": food.get("nf_protein"),
-                        "carbs": food.get("nf_total_carbohydrate"),
-                        "fats": food.get("nf_total_fat"),
-                        "fiber": food.get("nf_dietary_fiber"),
-                    }
+                    "meal_name": menu_name,
+                    "macros": macros
                 })
-            except Exception as e:
-                print(f"Nutritionix detail error for {restaurant_name}: {e}")
-                failed_restaurants.add(restaurant_name)
 
-    if failed_restaurants:
-        ai_menu_data = openai_fill_missing(list(failed_restaurants))
-        macros_data.extend(ai_menu_data)
- 
+    # Batch OpenAI fill for all missing macro items in one request
+    if incomplete_items:
+        print("Sending to OpenAI (incomplete):", incomplete_items)
+        completed = openai_fill_missing_macros(incomplete_items)
+        print("OpenAI filled:", completed)
+        macros_data.extend(completed)
+
+    print("Returning macros_data:", macros_data)
+
     return macros_data
 
-def openai_fill_missing(missing_restaurants: List[str]):
-    import json
+# Since 'or' treats '0' as false
+def fallback_macro(a, b):
+    return a if a is not None else b
+
+def openai_fill_missing_macros(incomplete_items):
     prompt = (
-    f"For each restaurant below, generate two plausible menu items with their estimated macros. For each, give:\n"
-        "- restaurant_name\n"
-        "- meal_name\n"
-        "- calories, protein (g), carbs (g), fats (g), fiber (g)\n\n"
-        f"Restaurants:\n"
-        + "\n".join(missing_restaurants) +
-    "\n\nRespond as a JSON array: "
-    '[{"restaurant":"...", "meal_name":"...", "macros":{"calories":..., "protein":..., "carbs":..., "fats":..., "fiber":...}}]'
-)
+        "You are a nutritionist AI. For each menu item below, fill in any missing nutrition information "
+        "(calories, protein, carbs, fats, fiber) as accurately as possible. Respond as a JSON array. "
+        "Leave existing values as is, only fill in blanks.\n\n"
+        + json.dumps(incomplete_items)
+    )
 
     client = openai.OpenAI()
     response = client.chat.completions.create(
@@ -138,43 +149,35 @@ def openai_fill_missing(missing_restaurants: List[str]):
         messages=[{"role": "user", "content": prompt}]
     )
     content = response.choices[0].message.content
-    try:
-        # Sometimes GPT puts markdown, so strip it out:
-        if "```json" in content: # type: ignore
-            content = content.split("```json")[1].split("```")[0].strip() # type: ignore
-        elif "```" in content: # type: ignore
-            content = content.split("```")[1].split("```")[0].strip() # type: ignore
-        return json.loads(content) # type: ignore
-    except Exception as e:
-        print(f"OpenAI fallback parsing failed for {missing_restaurants}: {e}\nRaw content: {content}")
-        return []
+    print("Raw OpenAI content:", content)
+    return parse_openai_response(content) # type: ignore
 
 
 def parse_openai_response(raw_response: str) -> List[MealRecommendation]:
-    pattern = re.compile(
-        r"\d+\.\s*(.*?)\s*-\s*(.*?)\n\s*Macros:\s*(\d+)\s*calories,\s*(\d+)g protein,\s*(\d+)g carbs,\s*(\d+)g fats,\s*(\d+)g fiber\n\s*Explanation:\s*(.*?)\n?",
-        re.MULTILINE
-    )
+    try:
+        # Extract first JSON array found in the string
+        match = re.search(r'\[\s*{.*?}\s*\]', raw_response, re.DOTALL)
+        if match:
+            json_str = match.group(0)
+            data = json.loads(json_str)
+        else:
+            # If not found, try to parse whole string
+            data = json.loads(raw_response)
+        # Convert each dict into a MealRecommendation
+        return [
+            MealRecommendation(
+                restaurant_name=item["restaurant"],
+                meal_name=item["meal_name"],
+                macros=item["macros"],
+                explanation=item.get("explanation", "")
+            )
+            for item in data
+        ]
+    except Exception as e:
+        print("Failed to parse OpenAI response as JSON:", e)
+        print("Raw content:", raw_response)
+        return []
 
-    matches = pattern.findall(raw_response)
-    parsed = []
-
-    for restaurant, meal, cal, prot, carbs, fat, fiber, explanation in matches:
-        macros = {
-            "calories": float(cal),
-            "protein": float(prot),
-            "carbs": float(carbs),
-            "fats": float(fat),
-            "fiber": float(fiber),
-        }
-        parsed.append(MealRecommendation(
-            restaurant_name=restaurant.strip(),
-            meal_name=meal.strip(),
-            macros=macros,
-            explanation=explanation.strip()
-        ))
-
-    return parsed
 
 
 def rank_meals_with_openai(menu_items, input_data: FinderInput):
@@ -189,7 +192,7 @@ You are a nutritionist. Based on the following goals:
 
 Rank the following menu items from best to worst. Include a 1-2 sentence explanation for each recommendation and the macros.
 
-Return the output as a list of JSON objects with keys: restaurant_name, meal_name, macros (with calories, protein, carbs, fats, fiber), and explanation.
+Return the output as a list of JSON objects with keys: restaurant, meal_name, macros (with calories, protein, carbs, fats, fiber), and explanation.
 
 {menu_items}
 """
