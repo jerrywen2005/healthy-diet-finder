@@ -12,3 +12,6 @@ email-validator==2.1.0.post1
 python-jose==3.3.0
 python-dotenv==1.0.1
 openai>=1.97.1
+selenium==4.21.0
+beautifulsoup4==4.12.3
+webdriver-manager==4.0.1

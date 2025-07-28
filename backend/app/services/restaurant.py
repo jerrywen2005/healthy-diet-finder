@@ -8,7 +8,10 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from backend.app.models.restaurant import RestaurantResult
 from backend.env import NUTRITIONIX_API_KEY, GOOGLE_MAPS_API_KEY, NUTRITIONIX_APP_ID
+from pathlib import Path
 
+with open(Path(__file__).parents[1] / "data" / "menus.json", "r", encoding="utf-8") as f:
+    menus = json.load(f)
 
 def find_restaurants(input_data: FinderInput, db: Session, user_id: int):
     # Google Maps API to find nearby places
@@ -61,7 +64,19 @@ def get_nearby_restaurants(location: str, range: int) -> List[str]:
         return []
     places = response.json().get("results", [])
 
-    return [place['name'] for place in places]
+    # Apply rating filter for better efficiency
+    MIN_AVERAGE_RATING = 4.0
+    MIN_RATINGS_COUNT = 20
+    filtered_places = [
+        place for place in places
+        if place.get("rating", 0) >= MIN_AVERAGE_RATING and
+           place.get("user_ratings_total", 0) >= MIN_RATINGS_COUNT
+    ]
+    
+    for place in filtered_places:
+        print(f"{place['name']} - Rating: {place.get('rating')} ({place.get('user_ratings_total')} reviews)")
+
+    return [place['name'] for place in filtered_places]
 
 
 def get_nutritionix_data(restaurant_names: List[str]):
@@ -126,7 +141,6 @@ def get_nutritionix_data(restaurant_names: List[str]):
     if incomplete_items:
         print("Sending to OpenAI (incomplete):", incomplete_items)
         completed = openai_fill_missing_macros(incomplete_items)
-        print("OpenAI filled:", completed)
         macros_data.extend(completed)
 
     print("Returning macros_data:", macros_data)
@@ -151,7 +165,6 @@ def openai_fill_missing_macros(incomplete_items):
         messages=[{"role": "user", "content": prompt}]
     )
     content = response.choices[0].message.content
-    print("Raw OpenAI content:", content)
     return parse_openai_response(content) # type: ignore
 
 

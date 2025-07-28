@@ -9,7 +9,7 @@ RUN ng build --prod
 # --- Stage 2: Build FastAPI backend ---
 FROM python:3.11-slim as backend-build
 WORKDIR /app
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 COPY backend/ .
 
