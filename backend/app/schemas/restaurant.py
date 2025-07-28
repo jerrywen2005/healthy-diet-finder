@@ -7,8 +7,8 @@ class FinderInput(BaseModel):
     carb_goal: Optional[int]
     fats_goal: Optional[int]
     fiber_goal: Optional[int]
-    distance_range: str
-    budget: str
+    distance_range: int
+    budget: int
     dietary_preferences: List[str]
     other_goals: List[str]
     time_of_day: str

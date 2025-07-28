@@ -47,9 +47,9 @@ def geocode_location(address: str) -> str:
     loc = results[0]['geometry']['location']
     return f"{loc['lat']},{loc['lng']}"
 
-def get_nearby_restaurants(location: str, range_str: str) -> List[str]:
+def get_nearby_restaurants(location: str, range: int) -> List[str]:
     location = geocode_location(location)
-    radius = 5000  # e.g., for "under 5 miles"
+    radius = range*1609.34  # miles to meters
     response = requests.get(f"https://maps.googleapis.com/maps/api/place/nearbysearch/json", params={
         "location": location,
         "radius": radius,
@@ -81,6 +81,8 @@ def get_nutritionix_data(restaurant_names: List[str]):
         # Using both branded and detail item requests to get the best of both worlds
         branded_items = search_response.json().get("branded", [])
         for item in branded_items[:3]:
+            if is_junk_item(item["food_name"]):
+                continue
             item_id = item.get("nix_item_id")
             menu_name = item.get("food_name")
             detail_macros = {}
@@ -189,8 +191,9 @@ You are a nutritionist. Based on the following goals:
 - Fats: {input_data.fats_goal}
 - Fiber: {input_data.fiber_goal}
 - Preferences: {', '.join(input_data.dietary_preferences)}
+- Budget: ${input_data.budget}
 
-Rank the following menu items from best to worst. Include a 1-2 sentence explanation for each recommendation and the macros.
+Rank the top 10 best choices. Include a 1-2 sentence explanation for each recommendation and the macros.
 
 Return the output as a list of JSON objects with keys: restaurant, meal_name, macros (with calories, protein, carbs, fats, fiber), and explanation.
 
@@ -204,3 +207,8 @@ Return the output as a list of JSON objects with keys: restaurant, meal_name, ma
         ],
     )
     return parse_openai_response(str(response.choices[0].message.content))
+
+# Filter out junk to speed up requests
+def is_junk_item(name):
+    JUNK_KEYWORDS = ["sauce", "ketchup", "dressing", "condiment", "mustard", "mayo", "butter", "gravy", "salt", "soda", "pop", "lemonade"]
+    return any(word in name.lower() for word in JUNK_KEYWORDS)
