@@ -1,0 +1,47 @@
+   <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+   <div class="finder-input-bg">
+  <div class="finder-header-bar">
+    <div class="finder-title">Restaurant Finder</div>
+  </div>
+ 
+    <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+  <div class="input-form-card">
+    <div class="input-form-title">Find the perfect restaurant for your goals</div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <label>Location</label>
+        <input [(ngModel)]="location" name="location" type="text" placeholder="e.g. Cary, NC or use my location" />
+      </div>
+      <div class="form-row">
+      </div>
+      <div class="form-row macros-row">
+        <label>Macros (optional)</label>
+        <div class="macro-inputs">
+          <input [(ngModel)]="calorie_goal" name="calories" type="number" placeholder="Calories" min="0" />
+          <input [(ngModel)]="protein_goal" name="protein" type="number" placeholder="Protein (g)" min="0" />
+          <input [(ngModel)]="carb_goal" name="carbs" type="number" placeholder="Carbs (g)" min="0" />
+          <input [(ngModel)]="fats_goal" name="fat" type="number" placeholder="Fat (g)" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Dietary Goal</label>
+        <select [(ngModel)]="other_goals" name="other_goals" required>
+          <option value="" disabled selected>Select your goal</option>
+          <option value="muscle">Muscle Gain</option>
+          <option value="weightloss">Weight Loss</option>
+          <option value="energy">Energy</option>
+          <option value="general">General Health</option>
+        </select>
+      </div>
+      <button class="find-btn" type="submit">Find Restaurants</button>
+    </form>
+  </div>
+</div>
