@@ -1,1 +1,46 @@
-<p>restaurant-output works!</p>
+   <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+   <div class="finder-input-bg">
+  <div class="finder-header-bar">
+    <div class="finder-title">Restaurant Finder</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+ 
+    <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+  <div class="finder-content-row">
+    <div class="map-container">
+      <!-- Replace later with real google maps component -->
+      <img src="assets/mock-map.png" alt="Map" class="results-map" />
+    </div>
+    <div class="results-container">
+      <div class="results-title">
+        Here are the top restaurants and meals for your goals:
+      </div>
+      <ol class="recommendations-list">
+        <li *ngFor="let rec of recommendations">
+          <div class="restaurant-name">{{ rec.restaurant }}:</div>
+          <ul class="meals-list">
+            <li *ngFor="let meal of rec.meals">
+              <span class="meal-title">{{ meal.name }}:</span>
+              <div class="macros">• {{ meal.macros }}</div>
+              <div class="explanation">• {{ meal.explanation }}</div>
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <div class="summary-section">
+        <strong>Summary:</strong> {{ summary }}
+      </div>
+      <button class="add-planner-btn" (click)="addToPlanner()">
+        Add to MyPlanner
+      </button>
+    </div>
+  </div>
+</div>

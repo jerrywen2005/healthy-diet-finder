@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SidebarComponent } from '../../dashboard/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
+import { SidebarComponent } from '../../dashboard/sidebar/sidebar.component';
 import { ProfileDropdownComponent } from '../../dashboard/profile-dropdown/profile-dropdown.component';
 
 @Component({
@@ -25,11 +26,15 @@ export class RestaurantInputComponent {
   dietary_preferences: string[] = [];
   other_goals: string[] = [];
   time_of_day: string | null = null;
-  location: string = '';
+  user_location: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private location: Location) {}
 
-  onSubmit() {
-      this.router.navigate(['/restaurant-finder/results']);
+  goToRestaurantOutput() {
+      this.router.navigate(['/restaurant/restaurant-output']);
+  }
+
+  goBack(){
+    this.location.back();
   }
 }

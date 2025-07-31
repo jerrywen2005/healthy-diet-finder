@@ -2,6 +2,7 @@
    <div class="finder-input-bg">
   <div class="finder-header-bar">
     <div class="finder-title">Restaurant Finder</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
   </div>
  
     <!-- Sidebar -->
@@ -15,10 +16,9 @@
 
   <div class="input-form-card">
     <div class="input-form-title">Find the perfect restaurant for your goals</div>
-    <form (ngSubmit)="onSubmit()">
       <div class="form-row">
         <label>Location</label>
-        <input [(ngModel)]="location" name="location" type="text" placeholder="e.g. Cary, NC or use my location" />
+        <input [(ngModel)]="user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
       </div>
       <div class="form-row">
       </div>
@@ -41,7 +41,6 @@
           <option value="general">General Health</option>
         </select>
       </div>
-      <button class="find-btn" type="submit">Find Restaurants</button>
-    </form>
+      <button class="find-btn" (click)="goToRestaurantOutput()">Find Restaurants</button>
   </div>
 </div>
