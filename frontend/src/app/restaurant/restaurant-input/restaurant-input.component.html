@@ -16,31 +16,81 @@
 
   <div class="input-form-card">
     <div class="input-form-title">Find the perfect restaurant for your goals</div>
-      <div class="form-row">
-        <label>Location</label>
-        <input [(ngModel)]="user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
-      </div>
-      <div class="form-row">
-      </div>
-      <div class="form-row macros-row">
-        <label>Macros (optional)</label>
-        <div class="macro-inputs">
-          <input [(ngModel)]="calorie_goal" name="calories" type="number" placeholder="Calories" min="0" />
-          <input [(ngModel)]="protein_goal" name="protein" type="number" placeholder="Protein (g)" min="0" />
-          <input [(ngModel)]="carb_goal" name="carbs" type="number" placeholder="Carbs (g)" min="0" />
-          <input [(ngModel)]="fats_goal" name="fat" type="number" placeholder="Fat (g)" min="0" />
-        </div>
-      </div>
-      <div class="form-row">
-        <label>Dietary Goal</label>
-        <select [(ngModel)]="other_goals" name="other_goals" required>
-          <option value="" disabled selected>Select your goal</option>
-          <option value="muscle">Muscle Gain</option>
-          <option value="weightloss">Weight Loss</option>
-          <option value="energy">Energy</option>
-          <option value="general">General Health</option>
-        </select>
-      </div>
-      <button class="find-btn" (click)="goToRestaurantOutput()">Find Restaurants</button>
+
+      <!-- LOCATION -->
+  <div class="form-row">
+    <label>Location</label>
+    <input [(ngModel)]="input.user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
+    <!-- Optionally, add a location button here -->
+  </div>
+  
+      <!-- MACROS -->
+  <div class="form-row macros-row">
+    <label>Macros (optional)</label>
+    <div class="macro-inputs">
+      <input [(ngModel)]="input.calorie_goal" name="calorie_goal" type="number" placeholder="Calories" min="0" />
+      <input [(ngModel)]="input.protein_goal" name="protein_goal" type="number" placeholder="Protein (g)" min="0" />
+      <input [(ngModel)]="input.carb_goal" name="carb_goal" type="number" placeholder="Carbs (g)" min="0" />
+      <input [(ngModel)]="input.fats_goal" name="fats_goal" type="number" placeholder="Fat (g)" min="0" />
+      <input [(ngModel)]="input.fiber_goal" name="fiber_goal" type="number" placeholder="Fiber (g)" min="0" />
+    </div>
+  </div>
+
+   <!-- DISTANCE RANGE -->
+  <div class="form-row">
+    <label>Distance Range (miles)</label>
+    <select [(ngModel)]="input.distance_range" name="distance_range">
+      <option [ngValue]="null" disabled selected>Select distance</option>
+      <option *ngFor="let d of distanceOptions" [value]="d">{{ d }}</option>
+    </select>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="form-row">
+    <label>Budget ($ max per meal)</label>
+    <select [(ngModel)]="input.budget" name="budget">
+      <option [ngValue]="null" disabled selected>Select budget</option>
+      <option *ngFor="let b of budgetOptions" [value]="b">{{ b }}</option>
+    </select>
+  </div>
+      
+      <!-- DIETARY PREFERENCES -->
+  <div class="form-row">
+    <label>Dietary Preferences</label>
+    <div class="chips-row">
+      <button type="button" class="chip"
+              [class.selected]="input.dietary_preferences.includes(p)"
+              *ngFor="let p of dietaryPreferencesList"
+              (click)="toggleChip('dietary', p)">
+        {{ p }}
+      </button>
+    </div>
+  </div>
+
+  <!-- OTHER GOALS -->
+  <div class="form-row">
+    <label>Other Goals</label>
+    <div class="chips-row">
+      <button type="button" class="chip"
+              [class.selected]="input.other_goals.includes(g)"
+              *ngFor="let g of otherGoalsList"
+              (click)="toggleChip('goals', g)">
+        {{ g }}
+      </button>
+    </div>
+  </div>
+
+  <!-- TIME OF DAY -->
+  <div class="form-row">
+    <label>Time of Day</label>
+    <select [(ngModel)]="input.time_of_day" name="time_of_day">
+      <option value="" disabled selected>Select time</option>
+      <option *ngFor="let t of timeOfDayOptions" [value]="t">{{ t }}</option>
+    </select>
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="find-btn" (click)="onSubmit()">Find Restaurants</button>
+
   </div>
 </div>

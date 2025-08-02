@@ -5,17 +5,8 @@ import { Location } from '@angular/common';
 import { SidebarComponent } from '../../dashboard/sidebar/sidebar.component';
 import { ProfileDropdownComponent } from '../../dashboard/profile-dropdown/profile-dropdown.component';
 import { FormsModule } from '@angular/forms';
-
-interface Meal { // Good for structure and good practice, will probably chnage other components to use interfaces too
-  name: string;
-  macros: string;
-  explanation: string;
-}
-
-interface Recommendation {
-  restaurant: string;
-  meals: Meal[];
-}
+import { MealRecommendation } from '../restaurant.service';
+import { RestaurantService } from '../restaurant.service';
 
 @Component({
   selector: 'app-restaurant-output',
@@ -24,44 +15,21 @@ interface Recommendation {
   imports: [FormsModule, CommonModule, SidebarComponent, ProfileDropdownComponent],
 })
 export class RestaurantOutputComponent {
-  sidebarOpen = false
-  // Placeholder data
-  recommendations: Recommendation[] = [
-    {
-      restaurant: 'Chipotle',
-      meals: [
-        {
-          name: 'Chicken Bowl',
-          macros: 'Calories: 650, Protein: 42g, Carbs: 65g, Fat: 18g',
-          explanation: 'High protein, good balance for muscle gain.'
-        }
-      ]
-    },
-    {
-      restaurant: 'Cava',
-      meals: [
-        {
-          name: 'Chicken Bowl',
-          macros: 'Calories: 610, Protein: 38g, Carbs: 58g, Fat: 19g',
-          explanation: 'Great for clean eating and Mediterranean diet.'
-        }
-      ]
-    },
-    {
-      restaurant: 'Cava',
-      meals: [
-        {
-          name: 'Salad Tofu Bowl',
-          macros: 'Calories: 470, Protein: 21g, Carbs: 45g, Fat: 15g',
-          explanation: 'Vegan, high fiber, lower calorie option.'
-        }
-      ]
+  sidebarOpen = false;
+  recommendations: MealRecommendation[] = [];
+
+  constructor(private router: Router, private location: Location, private restaurant: RestaurantService) {}
+
+  objectKeys = Object.keys;
+
+  ngOnInit() {
+    // Try to read from the service
+    this.recommendations = this.restaurant.lastResults || [];
+    if (!this.recommendations.length) {
+      // Optionally handle if user visits directly
+      this.router.navigate(['/restaurant/restaurant-input']);
     }
-  ];
-
-  summary = 'These restaurants and meals fit your dietary goals for high protein, moderate carbs, and healthy fats.';
-
-  constructor(private router: Router, private location: Location) {}
+  }
 
   addToPlanner() {
     // WIP

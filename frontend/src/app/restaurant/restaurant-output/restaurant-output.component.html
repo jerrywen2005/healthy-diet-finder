@@ -25,19 +25,16 @@
       </div>
       <ol class="recommendations-list">
         <li *ngFor="let rec of recommendations">
-          <div class="restaurant-name">{{ rec.restaurant }}:</div>
-          <ul class="meals-list">
-            <li *ngFor="let meal of rec.meals">
-              <span class="meal-title">{{ meal.name }}:</span>
-              <div class="macros">• {{ meal.macros }}</div>
-              <div class="explanation">• {{ meal.explanation }}</div>
-            </li>
-          </ul>
+          <div class="restaurant-name"><b>{{ rec.restaurant_name }}</b>: {{ rec.meal_name }}</div>
+          <div class="macros">
+            Macros:
+            <span *ngFor="let key of objectKeys(rec.macros); let last = last">
+              {{ key }}: {{ rec.macros[key] }}<span *ngIf="!last">, </span>
+            </span>
+          </div>
+          <div class="explanation">Explanation: {{ rec.explanation }}</div>
         </li>
       </ol>
-      <div class="summary-section">
-        <strong>Summary:</strong> {{ summary }}
-      </div>
       <button class="add-planner-btn" (click)="addToPlanner()">
         Add to MyPlanner
       </button>

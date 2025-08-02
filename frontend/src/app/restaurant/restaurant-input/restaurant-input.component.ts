@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
 import { SidebarComponent } from '../../dashboard/sidebar/sidebar.component';
 import { ProfileDropdownComponent } from '../../dashboard/profile-dropdown/profile-dropdown.component';
+import { FinderInput, RestaurantService } from '../restaurant.service';
 
 @Component({
   selector: 'app-restaurant-input',
@@ -14,24 +15,69 @@ import { ProfileDropdownComponent } from '../../dashboard/profile-dropdown/profi
 })
 export class RestaurantInputComponent {
 
+  error: string | null = null;
   sidebarOpen = false
 
-  calorie_goal: number | null = null;;
-  protein_goal: number | null = null;;
-  carb_goal: number | null = null;;
-  fats_goal: number | null = null;;
-  fiber_goal: number | null = null;;
-  distance_range: number | null = null;;
-  budget: number | null = null;;
-  dietary_preferences: string[] = [];
-  other_goals: string[] = [];
-  time_of_day: string | null = null;
-  user_location: string = '';
+  input: FinderInput = {
+    calorie_goal: undefined,
+    protein_goal: undefined,
+    carb_goal: undefined,
+    fats_goal: undefined,
+    fiber_goal: undefined,
+    distance_range: 0,
+    budget: 0,
+    dietary_preferences: [],
+    other_goals: [],
+    time_of_day: '',
+    user_location: ''
+}
 
-  constructor(private router: Router, private location: Location) {}
+  constructor(private router: Router, private location: Location, private restaurant: RestaurantService) {}
 
-  goToRestaurantOutput() {
-      this.router.navigate(['/restaurant/restaurant-output']);
+
+  distanceOptions = [1, 2, 5, 10, 20];
+  budgetOptions = [10, 15, 20, 25, 30, 40, 50];
+  dietaryPreferencesList = ['Vegetarian', 'Vegan', 'Keto', 'Low Carb', 'Gluten Free', 'Paleo'];
+  otherGoalsList = ['Muscle Gain', 'Weight Loss', 'Energy', 'General Health'];
+  timeOfDayOptions = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Any'];
+
+  toggleChip(type: 'dietary' | 'goals', value: string) {
+    if (type === 'dietary') {
+      const idx = this.input.dietary_preferences.indexOf(value);
+      if (idx > -1) this.input.dietary_preferences.splice(idx, 1);
+      else this.input.dietary_preferences.push(value);
+    } else {
+      const idx = this.input.other_goals.indexOf(value);
+      if (idx > -1) this.input.other_goals.splice(idx, 1);
+      else this.input.other_goals.push(value);
+    }
+  }
+
+
+  onSubmit() {
+    this.restaurant.run_finder({ 
+      calorie_goal: this.input.calorie_goal,
+      protein_goal: this.input.protein_goal,
+      carb_goal: this.input.carb_goal,
+      fats_goal: this.input.fats_goal,
+      fiber_goal: this.input.fiber_goal,
+      distance_range: this.input.distance_range,
+      budget: this.input.budget,
+      dietary_preferences: this.input.dietary_preferences,
+      other_goals: this.input.other_goals,
+      time_of_day: this.input.time_of_day,
+      location: this.input.user_location
+        
+    }).subscribe({
+      next: (results) => {
+        this.error = null; // Clear any previous error
+        this.restaurant.lastResults = results;
+        this.router.navigate(['/restaurant/restaurant-output']);
+    },
+      error: err => {
+        this.error = err.error?.detail || "Restaurant Finder failed. Please try again.";
+    }
+    });
   }
 
   goBack(){
