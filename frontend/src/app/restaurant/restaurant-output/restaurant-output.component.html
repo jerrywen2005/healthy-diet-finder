@@ -1,0 +1,43 @@
+   <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+   <div class="finder-input-bg">
+  <div class="finder-header-bar">
+    <div class="finder-title">Restaurant Finder</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+ 
+    <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+  <div class="finder-content-row">
+    <div class="map-container">
+      <!-- Replace later with real google maps component -->
+      <img src="assets/mock-map.png" alt="Map" class="results-map" />
+    </div>
+    <div class="results-container">
+      <div class="results-title">
+        Here are the top restaurants and meals for your goals:
+      </div>
+      <ol class="recommendations-list">
+        <li *ngFor="let rec of recommendations">
+          <div class="restaurant-name"><b>{{ rec.restaurant_name }}</b>: {{ rec.meal_name }}</div>
+          <div class="macros">
+            Macros:
+            <span *ngFor="let key of objectKeys(rec.macros); let last = last">
+              {{ key }}: {{ rec.macros[key] }}<span *ngIf="!last">, </span>
+            </span>
+          </div>
+          <div class="explanation">Explanation: {{ rec.explanation }}</div>
+        </li>
+      </ol>
+      <button class="add-planner-btn" (click)="addToPlanner()">
+        Add to MyPlanner
+      </button>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@
   <span *ngIf="!sidebarOpen">&#9776;</span>
   <span *ngIf="sidebarOpen">&times;</span>
 </button>
-<app-sidebar [open]="sidebarOpen"></app-sidebar>
+<app-sidebar [open]="sidebarOpen">page="home"></app-sidebar>
   
 <div class="dashboard-content-wrapper" [class.shifted]="sidebarOpen">
   <div class="dashboard-main">

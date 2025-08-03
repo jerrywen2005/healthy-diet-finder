@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from backend.app.schemas.user import UserCreate, UserLogin, UserInfo, EmailRequest
 from backend.app.models.user import User
@@ -6,7 +7,7 @@ from backend.app.db.session import get_db
 from backend.app.services.auth import hash_password, verify_password, create_access_token, create_verification_token
 from backend.app.services.email_service import send_verification_email, send_password_reset_email
 
-router = APIRouter()
+router = APIRouter(tags = ["Auth"])
 
 @router.post("/signup", response_model=UserInfo)
 def signup(user: UserCreate, db: Session = Depends(get_db)):
@@ -41,7 +42,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     if not db_user.is_verified: # type: ignore
         raise HTTPException(status_code=403, detail="Please verify your email before logging in.")
-    token = create_access_token({"user_id": db_user.id, "email": db_user.email})
+    token = create_access_token({"sub": str(db_user.id), "email": db_user.email})
     return {"access_token": token, "token_type": "bearer"}
 
 
@@ -94,3 +95,17 @@ def reset_password(token: str = Body(...), new_password: str = Body(...), db: Se
     user.reset_token = None # type: ignore
     db.commit()
     return {"message": "Password has been reset successfully"}
+
+
+# Auth token to get current user and protect fast api routes
+
+@router.post("/token")
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == form_data.username).first()
+    if not db_user or not verify_password(form_data.password, db_user.hashed_password): # type: ignore
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    if not db_user.is_verified: # type: ignore
+        raise HTTPException(status_code=403, detail="Please verify your email first.")
+
+    token = create_access_token({"sub": str(db_user.id)})
+    return {"access_token": token, "token_type": "bearer"}

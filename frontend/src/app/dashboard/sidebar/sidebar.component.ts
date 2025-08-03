@@ -12,8 +12,15 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   constructor(private router: Router) {}
   @Input() open = false;
+  @Input() page: 'home' | 'feature' = 'home';
 
   goToAbout() {
     this.router.navigate(['/about/about-post-login']);
+  }
+  goToHome() {
+    this.router.navigate(['dashboard'])
+  }
+  goToRestaurantFinder() {
+    this.router.navigate(['/restaurant/restaurant-input']);
   }
 }

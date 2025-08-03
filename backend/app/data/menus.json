@@ -1,0 +1,24 @@
+[
+  {
+    "restaurant": "Chipotle",
+    "meal_name": "Chicken Bowl",
+    "macros": {
+      "calories": 550,
+      "protein": 42,
+      "carbs": 45,
+      "fats": 16,
+      "fiber": 7
+    }
+  },
+  {
+    "restaurant": "McDonald's",
+    "meal_name": "Big Mac",
+    "macros": {
+      "calories": 550,
+      "protein": 25,
+      "carbs": 45,
+      "fats": 30,
+      "fiber": 3
+    }
+  }
+]

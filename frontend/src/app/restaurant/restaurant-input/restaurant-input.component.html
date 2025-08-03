@@ -1,0 +1,107 @@
+   <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+   <div class="finder-input-bg">
+  <div class="finder-header-bar">
+    <div class="finder-title">Restaurant Finder</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+ 
+    <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+  <div class="input-form-card">
+    <div class="input-form-title">Find the perfect restaurant for your goals</div>
+
+      <!-- LOCATION -->
+  <div class="form-row">
+    <label>Location (required)</label>
+    <div style="display: flex; gap: 0.6em;">
+        <input [(ngModel)]="input.user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
+        <button type="button" class="chip" (click)="getLocation()">Use My Location</button>
+    </div>
+  </div>
+  
+      <!-- MACROS -->
+  <div class="form-row macros-row">
+    <label>Macros (required)</label>
+    <div class="macro-inputs">
+      <input [(ngModel)]="input.calorie_goal" name="calorie_goal" type="number" placeholder="Calories" min="0" />
+      <input [(ngModel)]="input.protein_goal" name="protein_goal" type="number" placeholder="Protein (g)" min="0" />
+      <input [(ngModel)]="input.carb_goal" name="carb_goal" type="number" placeholder="Carbs (g)" min="0" />
+      <input [(ngModel)]="input.fats_goal" name="fats_goal" type="number" placeholder="Fat (g)" min="0" />
+      <input [(ngModel)]="input.fiber_goal" name="fiber_goal" type="number" placeholder="Fiber (g)" min="0" />
+    </div>
+  </div>
+
+   <!-- DISTANCE RANGE -->
+  <div class="form-row">
+    <label>Distance Range (miles)</label>
+    <select [(ngModel)]="input.distance_range" name="distance_range">
+      <option [ngValue]="null" disabled selected>Select distance</option>
+      <option *ngFor="let d of distanceOptions" [value]="d">{{ d }}</option>
+    </select>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="form-row">
+    <label>Budget ($ max per meal)</label>
+    <select [(ngModel)]="input.budget" name="budget">
+      <option [ngValue]="null" disabled selected>Select budget</option>
+      <option *ngFor="let b of budgetOptions" [value]="b">{{ b }}</option>
+    </select>
+  </div>
+      
+      <!-- DIETARY PREFERENCES -->
+  <div class="form-row">
+    <label>Dietary Preferences</label>
+    <div class="chips-row">
+      <button type="button" class="chip"
+              [class.selected]="input.dietary_preferences.includes(p)"
+              *ngFor="let p of dietaryPreferencesList"
+              (click)="toggleChip('dietary', p)">
+        {{ p }}
+      </button>
+    </div>
+  </div>
+
+  <!-- OTHER GOALS -->
+  <div class="form-row">
+    <label>Other Goals</label>
+    <div class="chips-row">
+      <button type="button" class="chip"
+              [class.selected]="input.other_goals.includes(g)"
+              *ngFor="let g of otherGoalsList"
+              (click)="toggleChip('goals', g)">
+        {{ g }}
+      </button>
+    </div>
+  </div>
+
+  <!-- TIME OF DAY -->
+  <div class="form-row">
+    <label>Time of Day</label>
+    <select [(ngModel)]="input.time_of_day" name="time_of_day">
+      <option value="" disabled selected>Select time</option>
+      <option *ngFor="let t of timeOfDayOptions" [value]="t">{{ t }}</option>
+    </select>
+  </div>
+
+  <!-- Error Message-->
+  <div *ngIf="error" class="input-error">
+    {{ error }}
+  </div>
+
+  <!-- SUBMIT -->
+  <button class="find-btn" (click)="onSubmit()" [disabled]="loading">
+    <span *ngIf="loading" class="loader"></span>
+    {{ loading ? 'Loading...' : 'Find Restaurants' }}
+  </button>
+
+
+  </div>
+</div>

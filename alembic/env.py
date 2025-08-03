@@ -26,7 +26,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from backend.app.db.base import Base
 
 # Import all models to register with Base.metadata
-from backend.app.models import goal, history, meal, user  # etc.
+from backend.app.models import goal, history, meal, user, restaurant  # etc.
 
 config = context.config
 if config.config_file_name is not None:

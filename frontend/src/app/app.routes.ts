@@ -15,6 +15,12 @@ export const routes: Routes = [
     loadChildren: () => import('./dashboard/dashboard.routes').then(m => m.dashboardRoutes)
   },
 
+  {
+    path: 'restaurant',
+    loadChildren: () => import('./restaurant/restaurant.routes').then(m => m.restaurantRoutes)
+  },
+  
+
 
 
   // ...other routes
