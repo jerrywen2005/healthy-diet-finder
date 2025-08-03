@@ -20,8 +20,10 @@
       <!-- LOCATION -->
   <div class="form-row">
     <label>Location</label>
-    <input [(ngModel)]="input.user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
-    <!-- Optionally, add a location button here -->
+    <div style="display: flex; gap: 0.6em;">
+        <input [(ngModel)]="input.user_location" name="user_location" type="text" placeholder="e.g. Cary, NC or use my location" />
+        <button type="button" class="chip" (click)="getLocation()">Use My Location</button>
+    </div>
   </div>
   
       <!-- MACROS -->

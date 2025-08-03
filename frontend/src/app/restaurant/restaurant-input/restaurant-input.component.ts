@@ -53,6 +53,22 @@ export class RestaurantInputComponent {
     }
   }
 
+  getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        this.input.user_location = lat + ", " +long
+      },
+      error => {
+        alert("Location permission denied or unavailable.");
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
 
   onSubmit() {
     this.restaurant.run_finder({ 
