@@ -29,7 +29,7 @@ export class RestaurantInputComponent {
     dietary_preferences: [],
     other_goals: [],
     time_of_day: '',
-    user_location: ''
+    user_location: undefined
 }
 
   constructor(private router: Router, private location: Location, private restaurant: RestaurantService) {}

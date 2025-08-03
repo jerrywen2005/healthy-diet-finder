@@ -20,7 +20,7 @@ export interface FinderInput {
   dietary_preferences: string[];
   other_goals: string[];
   time_of_day: string;
-  user_location: string;
+  user_location?: string;
 }
 
 @Injectable({ providedIn: 'root' })
