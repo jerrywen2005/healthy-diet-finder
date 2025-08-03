@@ -14,7 +14,7 @@ import { FinderInput, RestaurantService } from '../restaurant.service';
   styleUrl: './restaurant-input.component.css'
 })
 export class RestaurantInputComponent {
-
+  loading: boolean = false;
   error: string | null = null;
   sidebarOpen = false
 
@@ -71,6 +71,9 @@ export class RestaurantInputComponent {
 }
 
   onSubmit() {
+    if (this.loading) return; // Prevent double submit
+    this.loading = true;
+
     this.restaurant.run_finder({ 
       calorie_goal: this.input.calorie_goal,
       protein_goal: this.input.protein_goal,
@@ -91,7 +94,23 @@ export class RestaurantInputComponent {
         this.router.navigate(['/restaurant/restaurant-output']);
     },
       error: err => {
-        this.error = err.error?.detail || "Restaurant Finder failed. Please try again.";
+        this.loading = false;
+        // Handle array of errors
+      if (Array.isArray(err.error?.detail)) {
+        this.error = err.error.detail.map((e: any) =>
+          typeof e === 'string'
+            ? e
+            : (e.msg || JSON.stringify(e))
+        ).join(' | ');
+      }
+      // Handle string error
+      else if (typeof err.error?.detail === 'string') {
+        this.error = err.error.detail;
+      }
+      // Fallback
+      else {
+        this.error = "Restaurant Finder failed. Please try again.";
+      }
     }
     });
   }

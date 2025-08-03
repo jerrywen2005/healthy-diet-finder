@@ -28,7 +28,7 @@
   
       <!-- MACROS -->
   <div class="form-row macros-row">
-    <label>Macros (optional)</label>
+    <label>Macros (required)</label>
     <div class="macro-inputs">
       <input [(ngModel)]="input.calorie_goal" name="calorie_goal" type="number" placeholder="Calories" min="0" />
       <input [(ngModel)]="input.protein_goal" name="protein_goal" type="number" placeholder="Protein (g)" min="0" />
@@ -91,8 +91,17 @@
     </select>
   </div>
 
+  <!-- Error Message-->
+  <div *ngIf="error" class="input-error">
+    {{ error }}
+  </div>
+
   <!-- SUBMIT -->
-  <button class="find-btn" (click)="onSubmit()">Find Restaurants</button>
+  <button class="find-btn" (click)="onSubmit()" [disabled]="loading">
+    <span *ngIf="loading" class="loader"></span>
+    {{ loading ? 'Loading...' : 'Find Restaurants' }}
+  </button>
+
 
   </div>
 </div>

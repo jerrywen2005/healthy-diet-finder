@@ -173,6 +173,33 @@
     margin-left: 140px;
 }
 
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #29b865;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  animation: spin 0.9s linear infinite;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.input-error {
+  color: #d62c1a;
+  background: #fff6f2;
+  border: 1px solid #ffb7a8;
+  border-radius: 12px;
+  margin-bottom: 1.1rem;
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
 
 @media (max-width: 650px) {
   .input-form-card {
