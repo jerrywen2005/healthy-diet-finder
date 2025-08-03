@@ -9,7 +9,7 @@ from backend.app.db.session import get_db
 
 router = APIRouter(tags = ["Restaurant"])
 
-@router.post("/", response_model=List[MealRecommendation])
+@router.post("/run_finder", response_model=List[MealRecommendation])
 def run_finder(
     input: FinderInput,
     db: Session = Depends(get_db), 

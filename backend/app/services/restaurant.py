@@ -40,15 +40,21 @@ def find_restaurants(input_data: FinderInput, db: Session, user_id: int):
 
 # Convert location name to longitude latitude format
 def geocode_location(address: str) -> str:
-    res = requests.get("https://maps.googleapis.com/maps/api/geocode/json", params={
-        "address": address,
-        "key": GOOGLE_MAPS_API_KEY
-    })
-    results = res.json().get("results", [])
-    if not results:
-        raise ValueError("Invalid address")
-    loc = results[0]['geometry']['location']
-    return f"{loc['lat']},{loc['lng']}"
+    address = address.strip()
+    coord_pattern = r'^-?\d+(\.\d+)?,-?\d+(\.\d+)?$'
+
+    if re.match(coord_pattern, address):
+        return address
+    else:
+        res = requests.get("https://maps.googleapis.com/maps/api/geocode/json", params={
+            "address": address,
+            "key": GOOGLE_MAPS_API_KEY
+        })
+        results = res.json().get("results", [])
+        if not results:
+            raise ValueError("Invalid address")
+        loc = results[0]['geometry']['location']
+        return f"{loc['lat']},{loc['lng']}"
 
 def get_nearby_restaurants(location: str, range: int) -> List[str]:
     location = geocode_location(location)
