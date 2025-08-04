@@ -1,1 +1,34 @@
-<p>dna-output works!</p>
+<app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+<div class="dna-bg">
+  <div class="dna-header-bar">
+    <div class="dna-title">DNA Analysis Result</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+  <!-- Sidebar -->
+  <button class="sidebar-toggle"
+    [class.shifted-hamburger]="sidebarOpen"
+    (click)="sidebarOpen = !sidebarOpen">
+    <span *ngIf="!sidebarOpen">&#9776;</span>
+    <span *ngIf="sidebarOpen">&times;</span>
+  </button>
+  <app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+  <div class="dna-content-row">
+    <div class="results-container">
+      <div class="results-title">
+        Personalized Nutrition & Fitness Recommendation:
+      </div>
+      <div *ngIf="!result">
+        <div class="input-error">No result found. Please upload your DNA file first.</div>
+      </div>
+      <div *ngIf="result">
+        <div >
+          <b>File analyzed:</b> {{ result.file_name }}
+        </div>
+        <pre style="white-space: pre-wrap; background:#f8f8f8; padding:1.2em; border-radius:1.2em; font-size:1.09rem;">{{ result.analysis_result }}</pre>
+      </div>
+      <button class="add-planner-btn" (click)="addToPlanner()" *ngIf="result">
+        Add Plan to MyPlanner
+      </button>
+    </div>
+  </div>
+</div>

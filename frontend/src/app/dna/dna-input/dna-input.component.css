@@ -123,18 +123,6 @@
   color: #3a2921;
 }
 
-.macros-row label {
-  margin-bottom: 0.55em;
-}
-.macro-inputs {
-  display: flex;
-  gap: 0.7rem;
-  width: 100%;
-}
-.macro-inputs input {
-  width: 90px;
-}
-
 .submit-btn {
   background: #f5cfc4;
   color: #3a2921;
@@ -204,9 +192,5 @@
 @media (max-width: 650px) {
   .input-form-card {
     padding: 1.5rem 0.8rem 2rem 0.8rem;
-  }
-  .macro-inputs {
-    flex-direction: column;
-    gap: 0.2rem;
   }
 }

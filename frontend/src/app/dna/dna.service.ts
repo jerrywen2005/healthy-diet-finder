@@ -17,7 +17,7 @@ export interface DnaAnalysisInput {
 @Injectable({ providedIn: 'root' })
 export class DnaService{
     apiUrl = '/api/dna_analysis';
-    lastResult: DnaAnalysisResult | null = null;;
+    lastResult: DnaAnalysisResult | null = null;
 
     constructor(private http: HttpClient) {}
 
