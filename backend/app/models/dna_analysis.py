@@ -12,4 +12,4 @@ class DnaAnalysis(Base):
     analysis_result = Column(Text)
     timestamp = Column(String)
 
-    user = relationship("users")
+    user = relationship("User")
