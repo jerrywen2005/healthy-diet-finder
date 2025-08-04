@@ -9,7 +9,7 @@ from backend.app.db.session import get_db
 
 router = APIRouter(tags = ["Dna Analysis"])
 
-@router.post("/run_analysis", response_model=List[DnaAnalysisResult])
+@router.post("/run_analysis", response_model=DnaAnalysisResult)
 def run_analysis(
     input: DnaAnalysisCreate,
     db: Session = Depends(get_db), 

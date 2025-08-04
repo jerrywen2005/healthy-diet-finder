@@ -22,7 +22,11 @@ def analyze_dna(input_data: DnaAnalysisCreate, db: Session, user_id: int):
     db.add(db_entry)
     db.commit()
 
-    return
+    return DnaAnalysisResult(
+        file_name=db_entry.file_name, # type: ignore
+        file_content=db_entry.file_content, # type: ignore
+        analysis_result=db_entry.analysis_result, # type: ignore
+    )
 
 def openai_analyze(input_data: DnaAnalysisCreate)-> DnaAnalysisResult:
     prompt = f"""
