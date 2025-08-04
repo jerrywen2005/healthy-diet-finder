@@ -9,9 +9,9 @@ export interface DnaAnalysisResult {
   file_content: string
 }
 
-export interface FinderInput {
-  file_name: string;
-  file_content: string
+export interface DnaAnalysisInput {
+  file_name?: string;
+  file_content?: string
 }
 
 @Injectable({ providedIn: 'root' })
@@ -21,8 +21,8 @@ export class DnaService{
 
     constructor(private http: HttpClient) {}
 
-    run_finder(data: any): Observable<DnaAnalysisResult[]> {
-        return this.http.post<DnaAnalysisResult[]>(`${this.apiUrl}/run_analysis`, data);
-    }
+    runAnalysis(data: DnaAnalysisInput): Observable<DnaAnalysisResult> {
+    return this.http.post<DnaAnalysisResult>(`${this.apiUrl}/run_analysis`, data);
+  }
 
 }

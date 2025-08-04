@@ -23,4 +23,7 @@ export class SidebarComponent {
   goToRestaurantFinder() {
     this.router.navigate(['/restaurant/restaurant-input']);
   }
+  goToDnaAnalysis() {
+    this.router.navigate(['/dna/dna-input'])
+  }
 }

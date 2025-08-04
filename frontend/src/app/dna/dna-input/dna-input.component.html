@@ -1,1 +1,35 @@
-<p>dna-input works!</p>
+<app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+<div class="dna-input-bg">
+  <div class="dna-header-bar">
+    <div class="dna-title">DNA Analysis</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+
+  <!-- Sidebar -->
+  <button class="sidebar-toggle"
+    [class.shifted-hamburger]="sidebarOpen"
+    (click)="sidebarOpen = !sidebarOpen">
+    <span *ngIf="!sidebarOpen">&#9776;</span>
+    <span *ngIf="sidebarOpen">&times;</span>
+  </button>
+  <app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+  <div class="input-form-card">
+    <div class="input-form-title">Upload your DNA file for personalized nutrition & fitness analysis</div>
+    
+    <div class="form-row">
+      <label>DNA File (.txt, .csv, or raw DNA export)</label>
+      <input type="file" (change)="onFileSelected($event)" accept=".txt,.csv" />
+      <div *ngIf="fileName" style="font-size:0.97rem; color:#3a2921; margin-top:0.7em;">Selected: {{ fileName }}</div>
+    </div>
+
+    <!-- Error Message-->
+    <div *ngIf="error" class="input-error">
+      {{ error }}
+    </div>
+    <button class="submit-btn" (click)="onSubmit()" [disabled]="loading">
+      <span *ngIf="loading" class="loader"></span>
+      {{ loading ? 'Analyzing...' : 'Analyze DNA' }}
+    </button>
+  </div>
+</div>
