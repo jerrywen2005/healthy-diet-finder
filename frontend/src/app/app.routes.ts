@@ -22,6 +22,9 @@ export const routes: Routes = [
     path: 'dna',
     loadChildren: () => import('./dna/dna.routes').then(m => m.dnaRoutes)
   },
+  {
+    path: '**', redirectTo: 'dashboard'
+  },
   
 
 
