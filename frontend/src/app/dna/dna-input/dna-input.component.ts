@@ -39,9 +39,9 @@ input: DnaAnalysisInput = {
   }
   
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loading) return;
-    
+
     if(!this.file){
       this.error = 'Please upload a file'
       this.loading = false
@@ -51,19 +51,24 @@ input: DnaAnalysisInput = {
     this.error = null;
 
     this.input.file_name = this.fileName
-    this.input.file_content = String(fileToText(this.file))
-
-    this.dnaService.runAnalysis(this.input).subscribe({
-      next: (result) => {
-        this.dnaService.lastResult = result;
-        this.loading = false;
-        this.router.navigate(['/dna-analysis/dna-analysis-output']);
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = err.error?.detail || 'DNA Analysis failed. Please try again.';
-      },
-    });
+    
+    try {
+      this.input.file_content = await fileToText(this.file);
+      this.dnaService.runAnalysis(this.input).subscribe({
+        next: (result) => {
+          this.dnaService.lastResult = result;
+          this.loading = false;
+          this.router.navigate(['/dna/dna-output']);
+        },
+        error: (err) => {
+          this.loading = false;
+          this.error = err.error?.detail || 'DNA Analysis failed. Please try again.';
+        },
+      });
+    } catch (err) {
+      this.loading = false;
+      this.error = 'Failed to read file: ' + err;
+    }
   }
 
   goBack() {
