@@ -26,6 +26,8 @@ export class AuthService {
   logout() {
     this.token = null;
     localStorage.removeItem('access_token');
+    localStorage.removeItem('lastDnaResult');
+    localStorage.removeItem('lastRestaurantResult');
   }
 
   isLoggedIn(): boolean {

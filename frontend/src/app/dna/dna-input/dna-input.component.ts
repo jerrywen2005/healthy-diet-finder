@@ -57,6 +57,7 @@ input: DnaAnalysisInput = {
       this.dnaService.runAnalysis(this.input).subscribe({
         next: (result) => {
           this.dnaService.lastResult = result;
+          localStorage.setItem('lastDnaResult', JSON.stringify(result));
           this.loading = false;
           this.router.navigate(['/dna/dna-output']);
         },

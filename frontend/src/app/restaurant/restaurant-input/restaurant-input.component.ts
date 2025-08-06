@@ -91,6 +91,8 @@ export class RestaurantInputComponent {
       next: (results) => {
         this.error = null; // Clear any previous error
         this.restaurant.lastResults = results;
+        localStorage.setItem('lastRestaurantResult', JSON.stringify(results));
+        this.loading = false
         this.router.navigate(['/restaurant/restaurant-output']);
     },
       error: err => {

@@ -28,6 +28,13 @@ export class DnaOutputComponent {
   ngOnInit() {
     this.result = this.dnaService.lastResult;
     if (!this.result) {
+      // For page reloads
+      const stored = localStorage.getItem('lastDnaResult');
+      if (stored) {
+        this.result = JSON.parse(stored);
+      }
+    }
+    if (!this.result) {
       this.router.navigate(['/dna/dna-input']);
     }
   }

@@ -25,6 +25,12 @@ export class RestaurantOutputComponent {
   ngOnInit() {
     // Try to read from the service
     this.recommendations = this.restaurant.lastResults || [];
+    if (!this.recommendations) {
+      const stored = localStorage.getItem('lastRestaurantResult');
+      if (stored) {
+        this.recommendations = JSON.parse(stored);
+      }
+    }
     if (!this.recommendations.length) {
       // Optionally handle if user visits directly
       this.router.navigate(['/restaurant/restaurant-input']);

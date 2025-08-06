@@ -208,6 +208,23 @@
   margin-bottom: 1.6rem;
 }
 
+.add-planner-btn {
+  align-self: flex-end;
+  background: #f5cfc4;
+  color: #3a2921;
+  border: 1.4px solid #eeb9ad;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.18rem;
+  padding: 0.85rem 2.8rem;
+  box-shadow: 0 1.5px 7px #eec6c799;
+  transition: background 0.16s;
+  cursor: pointer;
+}
+.add-planner-btn:hover {
+  background: #eeb9ad;
+}
+
 @media (max-width: 950px) {
   .dna-content-row {
     flex-direction: column;
