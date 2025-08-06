@@ -14,10 +14,16 @@ export const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.routes').then(m => m.dashboardRoutes)
   },
-
   {
     path: 'restaurant',
     loadChildren: () => import('./restaurant/restaurant.routes').then(m => m.restaurantRoutes)
+  },
+  {
+    path: 'dna',
+    loadChildren: () => import('./dna/dna.routes').then(m => m.dnaRoutes)
+  },
+  {
+    path: '**', redirectTo: 'dashboard'
   },
   
 

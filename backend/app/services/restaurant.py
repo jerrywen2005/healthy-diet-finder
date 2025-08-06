@@ -23,7 +23,7 @@ def find_restaurants(input_data: FinderInput, db: Session, user_id: int):
     # OpenAI API to rank and explain best meals
     best_meals = rank_meals_with_openai(menu_items, input_data)
 
-    # 4. Save to DB
+    # Save to DB
     for meal in best_meals:
         db_entry = RestaurantResult(
             user_id=user_id,
