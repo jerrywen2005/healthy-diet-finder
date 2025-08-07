@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from backend.app.api import auth, dna_analysis, restaurant
+from backend.app.api import auth, dna_analysis, history, restaurant
 
 
 app = FastAPI()
@@ -11,3 +11,4 @@ app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 app.include_router(auth.router, prefix="/api/auth")
 app.include_router(restaurant.router, prefix="/api/restaurant")
 app.include_router(dna_analysis.router, prefix="/api/dna_analysis")
+app.include_router(history.router, prefix="/api/history")
