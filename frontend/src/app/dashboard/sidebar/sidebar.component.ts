@@ -26,4 +26,7 @@ export class SidebarComponent {
   goToDnaAnalysis() {
     this.router.navigate(['/dna/dna-input'])
   }
+  goToHistory() {
+    this.router.navigate(['/history/history'])
+  }
 }

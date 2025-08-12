@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadChildren: () => import('./dna/dna.routes').then(m => m.dnaRoutes)
   },
   {
+    path: 'history',
+    loadChildren: () => import('./history/history.routes').then(m => m.historyRoutes)
+  },
+  {
     path: '**', redirectTo: 'dashboard'
   },
   

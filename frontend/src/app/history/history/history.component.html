@@ -1,0 +1,83 @@
+   <app-profile-dropdown [userName]="'Jerry Wen'"></app-profile-dropdown>
+   <div class="history-input-bg">
+  <div class="history-header-bar">
+    <div class="history-title">History</div>
+    <button class="back-btn" [class.shifted]="sidebarOpen" (click)="goBack()">&#8592; Back</button>
+  </div>
+
+      <!-- Sidebar -->
+  <button class="sidebar-toggle"
+        [class.shifted-hamburger]="sidebarOpen"
+        (click)="sidebarOpen = !sidebarOpen">
+  <span *ngIf="!sidebarOpen">&#9776;</span>
+  <span *ngIf="sidebarOpen">&times;</span>
+</button>
+<app-sidebar [open]="sidebarOpen" page="feature"></app-sidebar>
+
+ 
+<main class="history-main">
+  <!-- Filters -->
+  <section class="filters-card">
+    <h2 class="card-title">Filter By</h2>
+
+    <div class="chip-group" role="group" aria-label="History type">
+      <button class="chip" type="button">Restaurant</button>
+      <button class="chip" type="button">DNA</button>
+      <button class="chip" type="button">Grocery</button>
+    </div>
+
+    <div class="dates">
+      <label class="date-field">
+        <span>From</span>
+        <input type="date" />
+      </label>
+      <label class="date-field">
+        <span>To</span>
+        <input type="date" />
+      </label>
+    </div>
+  </section>
+
+  <!-- History detail -->
+  <section class="history-card">
+    <header class="history-card__header">
+      <span class="badge badge--restaurant">Restaurant</span>
+      <time class="timestamp">2025-08-03 06:39</time>
+    </header>
+
+    <div class="history-grid">
+      <div class="kv">
+        <div class="k">History type</div>
+        <div class="v">Restaurant</div>
+      </div>
+      <div class="kv">
+        <div class="k">Date and time</div>
+        <div class="v">2025-08-03T06:39:19.318649</div>
+      </div>
+      <div class="kv">
+        <div class="k">Input Data</div>
+        <div class="v">
+          <pre class="code-block" ngNonBindable>
+            {
+            "goal": "high protein",
+            "calories": 650
+          }</pre>
+        </div>
+      </div>
+      <div class="kv">
+        <div class="k">Result</div>
+        <div class="v">
+          <pre class="code-block">{
+            "restaurant_name": "Green Bowl",
+            "meal_name": "Grilled Chicken Bowl",
+            "macros": {"p": 52, "c": 60, "f": 18}
+          }</pre>
+        </div>
+      </div>
+    </div>
+
+    <footer class="history-card__footer">
+      <button class="btn btn-ghost" type="button">View raw</button>
+    </footer>
+  </section>
+</main>
